@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">MobiWardrobe</string>
+
+    <string name="bt_login">Войти</string>
+    <string name="hint_password">Пароль</string>
+    <string name="hint_email">E-mail</string>
+    <string name="register_now">Зарегистрируйтесь</string>
+    <string name="title_login">Вход</string>
+
+    <string name="title_register">Регистрация</string>
+    <string name="hint_firstname">Имя</string>
+    <string name="hint_confirm_password">Подтвердите пароль</string>
+    <string name="bt_register">Зарегистрироваться</string>
+    <string name="don_t_have_an_account">У Вас нет аккаунта?</string>
+    <string name="already_have_an_account">У Вас уже есть аккаунт?</string>
+    <string name="login_now">Вход</string>
+
+    <string name="description_plus">plus</string>
+    <string name="title_item_weather">Weather</string>
+    <string name="title_item_set">Set</string>
+    <string name="title_item_clothes">Clothes</string>
+    <string name="title_item_calendar">Calendar</string>
+
+    <string name="back"><![CDATA[<-]]></string>
+    <string name="forward"><![CDATA[->]]></string>
+    <string name="sunday">ВС</string>
+    <string name="monday">ПН</string>
+    <string name="tuesday">ВТ</string>
+    <string name="wednesday">СР</string>
+    <string name="thursday">ЧТ</string>
+    <string name="friday">ПТ</string>
+    <string name="saturday">СБ</string>
+    <string name="month_and_year">Ноя 2022</string>
+
+</resources>

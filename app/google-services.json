@@ -1,0 +1,47 @@
+ {
+  "project_info": {
+    "project_number": "157160174626",
+    "project_id": "mobiwardrobe",
+    "storage_bucket": "mobiwardrobe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157160174626:android:8ff9e33ff59d44fbfa467b",
+        "android_client_info": {
+          "package_name": "com.mobiwardrobe.mobiwardrobe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "157160174626-bve802c97hn2t2s8lcjjpvbgdijpeaj9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobiwardrobe.mobiwardrobe",
+            "certificate_hash": "343bb1e5793aea661c5a56bd43e51c56579ceed4"
+          }
+        },
+        {
+          "client_id": "157160174626-rlak005bo529o6moirfhfmnbdvj2a9vm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXlwtoqcatIsShaVv3xf4qsqttEYR1XW4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "157160174626-rlak005bo529o6moirfhfmnbdvj2a9vm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
