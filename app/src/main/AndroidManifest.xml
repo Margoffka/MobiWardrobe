@@ -19,6 +19,13 @@
         android:theme="@style/Theme.MobiWardrobe"
         tools:targetApi="31">
         <activity
+            android:name=".ClothesDetailsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".EventEditActivity"
             android:exported="false">
             <meta-data

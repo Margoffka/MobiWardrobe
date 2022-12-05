@@ -1,5 +1,6 @@
 package com.mobiwardrobe.mobiwardrobe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +60,7 @@ public class ClothesFragment extends Fragment implements ImageAdapter.OnItemClic
         mImageAdapter.setOnItemClickListener(ClothesFragment.this);
 
         mStorage = FirebaseStorage.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("clothes");
 
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -91,6 +92,7 @@ public class ClothesFragment extends Fragment implements ImageAdapter.OnItemClic
     @Override
     public void onItemClick(int position) {
         Toast.makeText(requireContext(), "Normal click at position: " + position, Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(requireContext(), ClothesDetailsActivity.class));
     }
 
     @Override
@@ -108,7 +110,7 @@ public class ClothesFragment extends Fragment implements ImageAdapter.OnItemClic
             @Override
             public void onSuccess(Void unused) {
                 mDatabaseRef.child(selectedKey).removeValue();
-                Toast.makeText(requireContext(), "Item deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Удалено", Toast.LENGTH_SHORT).show();
             }
         });
     }
