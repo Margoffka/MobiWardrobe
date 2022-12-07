@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.item_clothes:
                 selectedFragment = new ClothesFragment();
                 break;
-            case R.id.item_set:
-                selectedFragment = new SetFragment();
+            case R.id.item_outfit:
+                selectedFragment = new OutfitFragment();
                 break;
             case R.id.item_calendar:
                 selectedFragment = new CalendarFragment();
