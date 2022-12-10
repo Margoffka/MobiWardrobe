@@ -14,14 +14,15 @@
         android:orientation="horizontal"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp">
+
         <Button
             android:id="@+id/bt_previous_month"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/back"
-            android:textColor="@color/purple_200"
-            android:background="@null"
+            android:textColor="@color/my_purple"
+            android:backgroundTint="@color/white"
             android:textStyle="bold"
             android:textSize="20sp"/>
 
@@ -41,8 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/forward"
-            android:textColor="@color/purple_200"
-            android:background="@null"
+            android:textColor="@color/my_purple"
+            android:backgroundTint="@color/white"
             android:textStyle="bold"
             android:textSize="20sp"/>
 
@@ -130,12 +131,12 @@
         android:id="@+id/bt_new_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Event"
-        android:textColor="@color/purple_200"
-        android:background="@null"
+        android:text="Добавить заметку"
+        android:textColor="@color/white"
+        android:background="@color/my_purple"
         android:textStyle="bold"
         android:layout_gravity="center"
-        android:textSize="20sp"/>
+        android:textSize="15sp"/>
 
     <ListView
         android:id="@+id/eventListView"

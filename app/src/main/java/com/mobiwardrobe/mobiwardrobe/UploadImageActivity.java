@@ -1,5 +1,6 @@
 package com.mobiwardrobe.mobiwardrobe;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,9 +10,9 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,14 +37,14 @@ public class UploadImageActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_TAKE_PHOTO = 103;
     private static final int CAMERA_REQUEST_CODE = 100;
 
-    private Button mButtonChooseImage;
+    private ImageButton mButtonChooseImage;
     private Button mButtonUpload;
-    private TextView mTextViewShowUploads;
+    private ImageButton mButtonShowUploads;
     private EditText mEditTextImageName;
     private ImageView mImageView;
     private ProgressBar mProgressBar;
     private EditText mTest;
-    private Button mButtonChoosePhoto;
+    private ImageButton mButtonChoosePhoto;
 
 //    private File mTempPhoto;
 //    private String newImageUri = "";
@@ -57,6 +58,7 @@ public class UploadImageActivity extends AppCompatActivity {
 
     //ActivityResultLauncher<Intent> activityResultLauncher;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +66,7 @@ public class UploadImageActivity extends AppCompatActivity {
 
         mButtonChooseImage = findViewById(R.id.bt_choose_image);
         mButtonUpload = findViewById(R.id.bt_upload);
-        mTextViewShowUploads = findViewById(R.id.tv_show_uploads);
+        mButtonShowUploads = findViewById(R.id.bt_show_uploads);
         mEditTextImageName = findViewById(R.id.et_image_name);
         mImageView = findViewById(R.id.iv_for_upload);
         mProgressBar = findViewById(R.id.pb_image_upload);
@@ -103,7 +105,7 @@ public class UploadImageActivity extends AppCompatActivity {
             }
         });
 
-        mTextViewShowUploads.setOnClickListener(new View.OnClickListener() {
+        mButtonShowUploads.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openClothesFragment();

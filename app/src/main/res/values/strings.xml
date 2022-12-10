@@ -16,10 +16,10 @@
     <string name="login_now">Вход</string>
 
     <string name="description_plus">plus</string>
-    <string name="title_item_weather">Weather</string>
-    <string name="title_item_outfit">Outfit</string>
-    <string name="title_item_clothes">Clothes</string>
-    <string name="title_item_calendar">Calendar</string>
+    <string name="title_item_weather">Погода</string>
+    <string name="title_item_outfit">Комплекты</string>
+    <string name="title_item_clothes">Одежда</string>
+    <string name="title_item_calendar">Календарь</string>
 
     <string name="back"><![CDATA[<-]]></string>
     <string name="forward"><![CDATA[->]]></string>
