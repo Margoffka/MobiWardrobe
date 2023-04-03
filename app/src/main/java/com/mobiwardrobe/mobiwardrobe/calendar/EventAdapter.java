@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe;
+package com.mobiwardrobe.mobiwardrobe.calendar;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.mobiwardrobe.mobiwardrobe.R;
 
 import java.util.List;
 

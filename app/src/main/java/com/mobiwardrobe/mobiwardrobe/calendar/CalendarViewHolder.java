@@ -1,10 +1,12 @@
-package com.mobiwardrobe.mobiwardrobe;
+package com.mobiwardrobe.mobiwardrobe.calendar;
 
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.mobiwardrobe.mobiwardrobe.R;
 
 import org.threeten.bp.LocalDate;
 

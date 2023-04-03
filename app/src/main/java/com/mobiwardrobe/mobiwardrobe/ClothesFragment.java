@@ -54,7 +54,6 @@ public class ClothesFragment extends Fragment implements ImageAdapter.OnItemClic
         mUploads = new ArrayList<>();
 
         mImageAdapter = new ImageAdapter(getContext(), mUploads);
-
         mRecyclerView.setAdapter(mImageAdapter);
 
         mImageAdapter.setOnItemClickListener(ClothesFragment.this);

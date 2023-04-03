@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe;
+package com.mobiwardrobe.mobiwardrobe.calendar;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.mobiwardrobe.mobiwardrobe.R;
 
 import org.threeten.bp.LocalDate;
 

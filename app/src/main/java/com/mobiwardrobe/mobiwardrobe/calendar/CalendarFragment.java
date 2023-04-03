@@ -1,9 +1,8 @@
-package com.mobiwardrobe.mobiwardrobe;
+package com.mobiwardrobe.mobiwardrobe.calendar;
 
-import static com.mobiwardrobe.mobiwardrobe.CalendarUtils.daysInMonthArray;
-import static com.mobiwardrobe.mobiwardrobe.CalendarUtils.monthYearFromDate;
+import static com.mobiwardrobe.mobiwardrobe.calendar.CalendarUtils.daysInMonthArray;
+import static com.mobiwardrobe.mobiwardrobe.calendar.CalendarUtils.monthYearFromDate;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jakewharton.threetenabp.AndroidThreeTen;
+import com.mobiwardrobe.mobiwardrobe.R;
 
 import org.threeten.bp.LocalDate;
 
@@ -35,12 +35,11 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     private Button nextMonthBtn;
     private Button newEventBtn;
 
-    @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getActivity().setTitle("Calendar");
-        View view = inflater.inflate(R.layout.calendar_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         AndroidThreeTen.init(requireContext());
 
         //init widgets

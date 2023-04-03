@@ -33,7 +33,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".EventEditActivity"
+            android:name=".calendar.EventEditActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -47,14 +47,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Register"
+            android:name=".authorization.RegisterActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Login"
+            android:name=".authorization.LoginActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
@@ -73,6 +73,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity android:name="com.mobiwardrobe.mobiwardrobe.ProfileActivity" />
     </application>
 
 </manifest>

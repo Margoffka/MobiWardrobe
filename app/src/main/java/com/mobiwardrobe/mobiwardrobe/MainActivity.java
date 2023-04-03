@@ -12,12 +12,16 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.mobiwardrobe.mobiwardrobe.authorization.LoginActivity;
+import com.mobiwardrobe.mobiwardrobe.calendar.CalendarFragment;
+import com.mobiwardrobe.mobiwardrobe.outfit.OutfitFragment;
+import com.mobiwardrobe.mobiwardrobe.weather.WeatherFragment;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private Button logoutBtn;
+    private Button profileButton;
     private FirebaseAuth mAuth;
 
     @Override
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ClothesFragment()).commit();
 
         logoutBtn = findViewById(R.id.bt_logout);
+        profileButton = findViewById(R.id.bt_profile);
         mAuth = FirebaseAuth.getInstance();
 
         //Change Activity to UploadImageActivity
@@ -46,7 +51,11 @@ public class MainActivity extends AppCompatActivity {
 
         logoutBtn.setOnClickListener(view -> {
             mAuth.signOut();
-            startActivity(new Intent(MainActivity.this, Login.class));
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        });
+
+        profileButton.setOnClickListener(view -> {
+            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         });
     }
 
@@ -78,8 +87,9 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
     }
+
 }
 
 

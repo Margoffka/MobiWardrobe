@@ -5,19 +5,25 @@ import com.google.firebase.database.Exclude;
 public class Upload {
     public String mName;
     public String mImageUrl;
-    public String mKey;
+    public String mColor;
+    public String mSeason;
+    public String mWeather;
     public String mType;
+    public String mKey;
 
     public Upload() {
         //empty constructor needed
     }
 
-    public Upload(String name, String type, String imageUrl) {
+    public Upload(String name, String type, String color, String season, String weather, String imageUrl) {
         if (name.trim().equals("")) {
             name = "No Name";
         }
         mName = name;
         mType = type;
+        mColor = color;
+        mSeason = season;
+        mWeather = weather;
         mImageUrl = imageUrl;
     }
 
@@ -37,6 +43,38 @@ public class Upload {
         mImageUrl = imageUrl;
     }
 
+    public String getType() {
+        return mType;
+    }
+
+    public void setType(String type) {
+        mType = type;
+    }
+
+    public String getColor() {
+        return mColor;
+    }
+
+    public void setColor(String color) {
+        mColor = color;
+    }
+
+    public String getSeason() {
+        return mSeason;
+    }
+
+    public void setSeason(String season) {
+        mSeason = season;
+    }
+
+    public String getWeather() {
+        return mWeather;
+    }
+
+    public void setWeather(String weather) {
+        mWeather = weather;
+    }
+
     @Exclude
     public String getKey() {
         return mKey;
@@ -45,13 +83,5 @@ public class Upload {
     @Exclude
     public void setKey(String key) {
         mKey = key;
-    }
-
-    public String getType() {
-        return mType;
-    }
-
-    public void setType(String type) {
-        mType = type;
     }
 }

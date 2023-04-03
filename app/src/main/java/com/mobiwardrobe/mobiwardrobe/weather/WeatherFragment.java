@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe;
+package com.mobiwardrobe.mobiwardrobe.weather;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,12 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class OutfitFragment extends Fragment {
+import com.mobiwardrobe.mobiwardrobe.R;
+
+public class WeatherFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getActivity().setTitle("Outfit");
-        View view = inflater.inflate(R.layout.set_fragment, container, false);
+        getActivity().setTitle("Weather");
+        View view = inflater.inflate(R.layout.fragment_weather, container, false);
         return view;
     }
 }

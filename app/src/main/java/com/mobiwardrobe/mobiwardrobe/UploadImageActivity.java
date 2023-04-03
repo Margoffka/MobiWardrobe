@@ -33,21 +33,22 @@ import com.theartofdev.edmodo.cropper.CropImage;
 public class UploadImageActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
-    private static final int REQUEST_CODE_PERMISSION_RECEIVE_CAMERA = 102;
-    private static final int REQUEST_CODE_TAKE_PHOTO = 103;
-    private static final int CAMERA_REQUEST_CODE = 100;
+//    private static final int REQUEST_CODE_PERMISSION_RECEIVE_CAMERA = 102;
+//    private static final int REQUEST_CODE_TAKE_PHOTO = 103;
+//    private static final int CAMERA_REQUEST_CODE = 100;
 
     private ImageButton mButtonChooseImage;
+    private ImageButton mButtonChoosePhoto;
     private Button mButtonUpload;
     private ImageButton mButtonShowUploads;
     private EditText mEditTextImageName;
     private ImageView mImageView;
     private ProgressBar mProgressBar;
-    private EditText mTest;
-    private ImageButton mButtonChoosePhoto;
+    private EditText mType;
+    private EditText mColor;
+    private EditText mSeason;
+    private EditText mWeather;
 
-//    private File mTempPhoto;
-//    private String newImageUri = "";
 
     private Uri mImageUri;
 
@@ -65,17 +66,20 @@ public class UploadImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload_image);
 
         mButtonChooseImage = findViewById(R.id.bt_choose_image);
+        mButtonChoosePhoto = findViewById(R.id.bt_choose_photo);
         mButtonUpload = findViewById(R.id.bt_upload);
         mButtonShowUploads = findViewById(R.id.bt_show_uploads);
         mEditTextImageName = findViewById(R.id.et_image_name);
         mImageView = findViewById(R.id.iv_for_upload);
         mProgressBar = findViewById(R.id.pb_image_upload);
+
         mStorageRef = FirebaseStorage.getInstance().getReference("clothes");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("clothes");
 
-        mTest = findViewById(R.id.et_type);
-
-        mButtonChoosePhoto = findViewById(R.id.bt_choose_photo);
+        mType = findViewById(R.id.et_type);
+        mColor = findViewById(R.id.et_color);
+        mSeason = findViewById(R.id.et_season);
+        mWeather = findViewById(R.id.et_weather);
 
         mButtonChoosePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,10 +126,6 @@ public class UploadImageActivity extends AppCompatActivity {
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
-//    public void onChoosePhoto(View v) {
-//
-//    }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -144,12 +144,10 @@ public class UploadImageActivity extends AppCompatActivity {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
-            if (resultCode == RESULT_OK){
+            if (resultCode == RESULT_OK) {
                 mImageUri = result.getUri();
                 mImageView.setImageURI(mImageUri);
-            }
-
-            else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
                 Toast.makeText(this, "Possible error: " + error, Toast.LENGTH_SHORT).show();
             }
@@ -185,7 +183,9 @@ public class UploadImageActivity extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     String url = uri.toString();
                                     //creating the upload object to store uploaded image details
-                                    Upload upload = new Upload(mEditTextImageName.getText().toString().trim(), mTest.getText().toString().trim(), url);
+                                    Upload upload = new Upload(mEditTextImageName.getText().toString().trim(),
+                                            mType.getText().toString().trim(), mColor.getText().toString().trim(),
+                                            mSeason.getText().toString().trim(), mWeather.getText().toString().trim(), url);
                                     String uploadId = mDatabaseRef.push().getKey();
                                     mDatabaseRef.child(uploadId).setValue(upload);
                                 }

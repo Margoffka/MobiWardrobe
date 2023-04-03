@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe;
+package com.mobiwardrobe.mobiwardrobe.calendar;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalTime;
@@ -21,8 +21,7 @@ public class Event
 
         return events;
     }
-
-
+    
     private String name;
     private LocalDate date;
     private LocalTime time;

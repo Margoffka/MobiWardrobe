@@ -1,11 +1,14 @@
-package com.mobiwardrobe.mobiwardrobe;
+package com.mobiwardrobe.mobiwardrobe.calendar;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.mobiwardrobe.mobiwardrobe.R;
 
 import org.threeten.bp.LocalTime;
 
@@ -16,6 +19,7 @@ public class EventEditActivity extends AppCompatActivity {
 
     private LocalTime time;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
