@@ -15,6 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.mobiwardrobe.mobiwardrobe.authorization.LoginActivity;
 import com.mobiwardrobe.mobiwardrobe.calendar.CalendarFragment;
 import com.mobiwardrobe.mobiwardrobe.outfit.OutfitFragment;
+import com.mobiwardrobe.mobiwardrobe.profile.ProfileActivity;
+import com.mobiwardrobe.mobiwardrobe.upload.UploadImageActivity;
 import com.mobiwardrobe.mobiwardrobe.weather.WeatherFragment;
 
 

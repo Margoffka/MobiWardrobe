@@ -22,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.mobiwardrobe.mobiwardrobe.upload.ImageAdapter;
+import com.mobiwardrobe.mobiwardrobe.upload.Upload;
 
 import java.util.ArrayList;
 import java.util.List;

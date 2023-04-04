@@ -40,7 +40,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".UploadImageActivity"
+            android:name=".upload.UploadImageActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -73,7 +73,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name="com.mobiwardrobe.mobiwardrobe.ProfileActivity" />
+        <activity android:name="com.mobiwardrobe.mobiwardrobe.profile.ProfileActivity" />
     </application>
 
 </manifest>

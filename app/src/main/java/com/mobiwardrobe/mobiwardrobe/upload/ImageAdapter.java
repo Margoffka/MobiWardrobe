@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe;
+package com.mobiwardrobe.mobiwardrobe.upload;
 
 import android.content.Context;
 import android.view.ContextMenu;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mobiwardrobe.mobiwardrobe.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
