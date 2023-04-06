@@ -15,7 +15,7 @@ public class Upload {
         //empty constructor needed
     }
 
-    public Upload(String name, String imageUrl, String color, String season, String weather, String type) {
+    public Upload(String name, String color, String season, String weather, String type, String imageUrl) {
         if (name.trim().equals("")) {
             name = "No Name";
         }

@@ -14,6 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mobiwardrobe.mobiwardrobe.authorization.LoginActivity;
 import com.mobiwardrobe.mobiwardrobe.calendar.CalendarFragment;
+import com.mobiwardrobe.mobiwardrobe.clothes.ClothesFragment;
 import com.mobiwardrobe.mobiwardrobe.outfit.OutfitFragment;
 import com.mobiwardrobe.mobiwardrobe.profile.ProfileActivity;
 import com.mobiwardrobe.mobiwardrobe.upload.UploadImageActivity;

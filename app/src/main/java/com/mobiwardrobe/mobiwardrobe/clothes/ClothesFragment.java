@@ -1,6 +1,5 @@
-package com.mobiwardrobe.mobiwardrobe;
+package com.mobiwardrobe.mobiwardrobe.clothes;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +8,13 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.mobiwardrobe.mobiwardrobe.upload.ImageAdapter;
+import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.upload.Upload;
 
 import java.util.ArrayList;
@@ -30,70 +30,76 @@ import java.util.List;
 
 
 public class ClothesFragment extends Fragment implements ImageAdapter.OnItemClickListener {
-    private RecyclerView mRecyclerView;
-    private ImageAdapter mImageAdapter;
+    private RecyclerView recyclerView;
+    private ImageAdapter imageAdapter;
 
-    private ProgressBar mProgressCircle;
+    private ProgressBar progressBar;
 
-    private FirebaseStorage mStorage;
-    private DatabaseReference mDatabaseRef;
-    private ValueEventListener mDBListener;
+    private FirebaseStorage firebaseStorage;
+    private DatabaseReference databaseReference;
+    private ValueEventListener valueEventListener;
 
-    private List<Upload> mUploads;
+    private FirebaseUser firebaseUser;
+    private String userID;
 
-    @Nullable
+    private List<Upload> uploads;
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getActivity().setTitle("Clothes");
-        View view = inflater.inflate(R.layout.clothes_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_clothes, container, false);
 
-        mRecyclerView = view.findViewById(R.id.rw_clothes);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+        recyclerView = view.findViewById(R.id.rv_clothes);
+        recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
 
-        mProgressCircle = view.findViewById(R.id.pb_circle);
+        uploads = new ArrayList<>();
+        imageAdapter = new ImageAdapter(getContext(), uploads);
+        recyclerView.setAdapter(imageAdapter);
+        imageAdapter.setOnItemClickListener(ClothesFragment.this);
 
-        mUploads = new ArrayList<>();
+        progressBar = view.findViewById(R.id.pb_clothes);
 
-        mImageAdapter = new ImageAdapter(getContext(), mUploads);
-        mRecyclerView.setAdapter(mImageAdapter);
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        userID = firebaseUser.getUid();
 
-        mImageAdapter.setOnItemClickListener(ClothesFragment.this);
+        firebaseStorage = FirebaseStorage.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userID).child("clothes");
 
-        mStorage = FirebaseStorage.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("clothes");
-
-        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
+        valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                mUploads.clear();
+                uploads.clear();
 
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     Upload upload = postSnapshot.getValue(Upload.class);
                     upload.setKey(postSnapshot.getKey());
-                    mUploads.add(upload);
+                    uploads.add(upload);
                 }
-
-                mImageAdapter.notifyDataSetChanged();
-
-                mProgressCircle.setVisibility(View.INVISIBLE);
+                imageAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(requireContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                mProgressCircle.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
 
         return view;
     }
 
+
     @Override
     public void onItemClick(int position) {
         Toast.makeText(requireContext(), "Normal click at position: " + position, Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(requireContext(), ClothesDetailsActivity.class));
+        // Sending image id to FullScreenActivity
+//        Intent intent = new Intent(getContext(), ClothesDetailsActivity.class);
+//        // passing array index
+//        intent.putExtra("Image", uploads.get(position).getImageUrl());
+//        intent.putExtra("Name", uploads.get(position).getName());
+//        startActivity(intent);
     }
 
     @Override
@@ -103,14 +109,14 @@ public class ClothesFragment extends Fragment implements ImageAdapter.OnItemClic
 
     @Override
     public void onDeleteClick(int position) {
-        Upload selectedItem = mUploads.get(position);
+        Upload selectedItem = uploads.get(position);
         final String selectedKey = selectedItem.getKey();
 
-        StorageReference imageRef = mStorage.getReferenceFromUrl(selectedItem.getImageUrl());
+        StorageReference imageRef = firebaseStorage.getReferenceFromUrl(selectedItem.getImageUrl());
         imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                mDatabaseRef.child(selectedKey).removeValue();
+                databaseReference.child(selectedKey).removeValue();
                 Toast.makeText(requireContext(), "Удалено", Toast.LENGTH_SHORT).show();
             }
         });
@@ -119,22 +125,6 @@ public class ClothesFragment extends Fragment implements ImageAdapter.OnItemClic
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mDatabaseRef.removeEventListener(mDBListener);
+        databaseReference.removeEventListener(valueEventListener);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

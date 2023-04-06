@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe.upload;
+package com.mobiwardrobe.mobiwardrobe.clothes;
 
 import android.content.Context;
 import android.view.ContextMenu;
@@ -13,54 +13,50 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.mobiwardrobe.mobiwardrobe.R;
-import com.squareup.picasso.Picasso;
+import com.mobiwardrobe.mobiwardrobe.upload.Upload;
 
 import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
-    private Context mContext;
-    private List<Upload> mUploads;
-    private OnItemClickListener mListener;
+    private Context context;
+    private List<Upload> uploads;
+    private OnItemClickListener onItemClickListener;
 
     public ImageAdapter(Context context, List<Upload> uploads) {
-        mContext = context;
-        mUploads = uploads;
+        this.context = context;
+        this.uploads = uploads;
     }
 
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.image_item, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.image_item, parent, false);
         return new ImageViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        Upload uploadCurrent = mUploads.get(position);
-        holder.textViewNameClothes.setText(uploadCurrent.getName());
-        Picasso.with(mContext)
-                .load(uploadCurrent.getImageUrl())
-                .fit()
-                .centerCrop()
-                .placeholder(R.drawable.ic_baseline_image_24)
-                .into(holder.imageViewClothes);
+        Upload uploadCurrent = uploads.get(position);
+        Glide.with(context).load(uploadCurrent.getImageUrl()).into(holder.imageViewClothes);
+        holder.nameClothes.setText(uploadCurrent.getName());
     }
 
     @Override
     public int getItemCount() {
-        return mUploads.size();
+        return uploads.size();
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
             View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
-        public TextView textViewNameClothes;
+        public TextView nameClothes;
         public ImageView imageViewClothes;
 
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewNameClothes = itemView.findViewById(R.id.tw_name_clothes);
-            imageViewClothes = itemView.findViewById(R.id.iw_upload_clothes);
+            nameClothes = itemView.findViewById(R.id.tv_clothes_name);
+            imageViewClothes = itemView.findViewById(R.id.iv_clothes_item);
 
             itemView.setOnClickListener(this);
             itemView.setOnCreateContextMenuListener(this);
@@ -68,10 +64,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
         @Override
         public void onClick(View v) {
-            if (mListener != null) {
+            if (onItemClickListener != null) {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    mListener.onItemClick(position);
+                    onItemClickListener.onItemClick(position);
                 }
             }
         }
@@ -88,16 +84,16 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
         @Override
         public boolean onMenuItemClick(@NonNull MenuItem item) {
-            if (mListener != null) {
+            if (onItemClickListener != null) {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
 
                     switch (item.getItemId()) {
                         case 1:
-                            mListener.onWhatEverClick(position);
+                            onItemClickListener.onWhatEverClick(position);
                             return true;
                         case 2:
-                            mListener.onDeleteClick(position);
+                            onItemClickListener.onDeleteClick(position);
                             return true;
                     }
                 }
@@ -115,6 +111,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
-        mListener = listener;
+        onItemClickListener = listener;
     }
 }

@@ -199,8 +199,8 @@ public class UploadImageActivity extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     String uriTxt = uri.toString();
                                     //creating the upload object to store uploaded image details
-                                    Upload upload = new Upload(imageNameTxt, colorTxt,
-                                            seasonTxt, weatherTxt, typeTxt, uriTxt);
+                                    Upload upload = new Upload(imageNameTxt, colorTxt, seasonTxt,
+                                            weatherTxt, typeTxt, uriTxt);
                                     String key = databaseReference.push().getKey();
                                     databaseReference.child(key).setValue(upload);
                                     startActivity(new Intent(UploadImageActivity.this, MainActivity.class));
