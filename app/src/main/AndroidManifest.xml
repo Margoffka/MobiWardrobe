@@ -74,6 +74,7 @@
                 android:value="" />
         </activity>
         <activity android:name="com.mobiwardrobe.mobiwardrobe.profile.ProfileActivity" />
+        <activity android:name="com.mobiwardrobe.mobiwardrobe.ClothesEditActivity" />
     </application>
 
 </manifest>

@@ -103,11 +103,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     }
 
     public interface OnItemClickListener {
-        void onItemClick (int position);
+        void onItemClick(int position);
 
-        void onWhatEverClick (int position);
+        void onWhatEverClick(int position);
 
-        void onDeleteClick (int position);
+        void onDeleteClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

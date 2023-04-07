@@ -1,7 +1,5 @@
 package com.mobiwardrobe.mobiwardrobe.upload;
 
-import com.google.firebase.database.Exclude;
-
 public class Upload {
     public String name;
     public String imageUrl;
@@ -75,12 +73,10 @@ public class Upload {
         this.type = type;
     }
 
-    @Exclude
     public String getKey() {
         return key;
     }
 
-    @Exclude
     public void setKey(String key) {
         this.key = key;
     }

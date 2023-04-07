@@ -1,5 +1,6 @@
 package com.mobiwardrobe.mobiwardrobe.clothes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.mobiwardrobe.mobiwardrobe.ClothesDetailsActivity;
 import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.upload.Upload;
 
@@ -68,12 +70,10 @@ public class ClothesFragment extends Fragment implements ImageAdapter.OnItemClic
         valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 uploads.clear();
-
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    Upload upload = postSnapshot.getValue(Upload.class);
-                    upload.setKey(postSnapshot.getKey());
+                for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
+                    Upload upload = itemSnapshot.getValue(Upload.class);
+                    upload.setKey(itemSnapshot.getKey());
                     uploads.add(upload);
                 }
                 imageAdapter.notifyDataSetChanged();
@@ -95,11 +95,16 @@ public class ClothesFragment extends Fragment implements ImageAdapter.OnItemClic
     public void onItemClick(int position) {
         Toast.makeText(requireContext(), "Normal click at position: " + position, Toast.LENGTH_SHORT).show();
         // Sending image id to FullScreenActivity
-//        Intent intent = new Intent(getContext(), ClothesDetailsActivity.class);
+        Intent intent = new Intent(getContext(), ClothesDetailsActivity.class);
 //        // passing array index
-//        intent.putExtra("Image", uploads.get(position).getImageUrl());
-//        intent.putExtra("Name", uploads.get(position).getName());
-//        startActivity(intent);
+        intent.putExtra("Image", uploads.get(position).getImageUrl());
+        intent.putExtra("Name", uploads.get(position).getName());
+        intent.putExtra("Type", uploads.get(position).getName());
+        intent.putExtra("Color", uploads.get(position).getColor());
+        intent.putExtra("Season", uploads.get(position).getSeason());
+        intent.putExtra("Weather", uploads.get(position).getWeather());
+        intent.putExtra("Key", uploads.get(position).getKey());
+        startActivity(intent);
     }
 
     @Override
