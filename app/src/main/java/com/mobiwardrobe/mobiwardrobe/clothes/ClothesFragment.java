@@ -23,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.mobiwardrobe.mobiwardrobe.ClothesDetailsActivity;
+import com.mobiwardrobe.mobiwardrobe.DetailsClothesActivity;
 import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.upload.Upload;
 
@@ -95,11 +95,11 @@ public class ClothesFragment extends Fragment implements ImageAdapter.OnItemClic
     public void onItemClick(int position) {
         Toast.makeText(requireContext(), "Normal click at position: " + position, Toast.LENGTH_SHORT).show();
         // Sending image id to FullScreenActivity
-        Intent intent = new Intent(getContext(), ClothesDetailsActivity.class);
+        Intent intent = new Intent(getContext(), DetailsClothesActivity.class);
 //        // passing array index
         intent.putExtra("Image", uploads.get(position).getImageUrl());
         intent.putExtra("Name", uploads.get(position).getName());
-        intent.putExtra("Type", uploads.get(position).getName());
+        intent.putExtra("Type", uploads.get(position).getType());
         intent.putExtra("Color", uploads.get(position).getColor());
         intent.putExtra("Season", uploads.get(position).getSeason());
         intent.putExtra("Weather", uploads.get(position).getWeather());

@@ -21,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class ClothesDetailsActivity extends AppCompatActivity {
+public class DetailsClothesActivity extends AppCompatActivity {
     private ImageView detailsImage;
     private TextView detailsName;
     private TextView detailsType;
@@ -77,7 +77,7 @@ public class ClothesDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void unused) {
                         reference.child(key).removeValue();
-                        Toast.makeText(ClothesDetailsActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailsClothesActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         finish();
                     }
@@ -88,7 +88,7 @@ public class ClothesDetailsActivity extends AppCompatActivity {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ClothesDetailsActivity.this, ClothesEditActivity.class)
+                Intent intent = new Intent(DetailsClothesActivity.this, EditClothesActivity.class)
                         .putExtra("Name", detailsName.getText().toString())
                         .putExtra("Type", detailsType.getText().toString())
                         .putExtra("Color", detailsColor.getText().toString())

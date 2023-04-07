@@ -26,7 +26,7 @@
         </activity>
 
         <activity
-            android:name=".ClothesDetailsActivity"
+            android:name=".DetailsClothesActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -74,7 +74,7 @@
                 android:value="" />
         </activity>
         <activity android:name="com.mobiwardrobe.mobiwardrobe.profile.ProfileActivity" />
-        <activity android:name="com.mobiwardrobe.mobiwardrobe.ClothesEditActivity" />
+        <activity android:name="com.mobiwardrobe.mobiwardrobe.EditClothesActivity" />
     </application>
 
 </manifest>
