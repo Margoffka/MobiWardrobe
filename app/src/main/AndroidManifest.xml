@@ -5,7 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -19,12 +20,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MobiWardrobe"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ChooseOutfitElements"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".outfit.CreateOutfitActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Theme.AppCompat">
-        </activity>
-
+            android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".DetailsClothesActivity"
             android:exported="false">
@@ -73,8 +85,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name="com.mobiwardrobe.mobiwardrobe.profile.ProfileActivity" />
-        <activity android:name="com.mobiwardrobe.mobiwardrobe.EditClothesActivity" />
+        <activity android:name=".profile.ProfileActivity" />
+        <activity android:name=".EditClothesActivity" />
+        <activity android:name="com.mobiwardrobe.mobiwardrobe.outfit.ChooseElementsActivity" />
     </application>
 
 </manifest>

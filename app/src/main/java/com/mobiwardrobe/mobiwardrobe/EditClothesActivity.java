@@ -123,7 +123,7 @@ public class EditClothesActivity extends AppCompatActivity {
     public void saveData() {
         AlertDialog.Builder builder = new AlertDialog.Builder(EditClothesActivity.this);
         builder.setCancelable(false);
-        builder.setView(R.layout.progress_layout);
+        builder.setView(R.layout.layout_progress);
         AlertDialog dialog = builder.create();
         dialog.show();
         if (uri != null) {

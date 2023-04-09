@@ -28,7 +28,7 @@ public class EventAdapter extends ArrayAdapter<Event>
         Event event = getItem(position);
 
         if (convertView == null)
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_cell, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.cell_event, parent, false);
 
         TextView eventCellTV = convertView.findViewById(R.id.eventCellTV);
 
