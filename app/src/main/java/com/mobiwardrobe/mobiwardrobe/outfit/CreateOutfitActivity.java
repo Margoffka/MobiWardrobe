@@ -69,6 +69,7 @@ public class CreateOutfitActivity extends AppCompatActivity implements CreateOut
         urlsList = new ArrayList<>();
 
         recyclerView = findViewById(R.id.rv_show_elements);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL, false));
         adapter = new CreateOutfitAdapter(this, uris, this);
@@ -144,7 +145,6 @@ public class CreateOutfitActivity extends AppCompatActivity implements CreateOut
                 Toast.makeText(this, "Please fill All Field", Toast.LENGTH_SHORT).show();
             }
         }
-
 
     }
 
