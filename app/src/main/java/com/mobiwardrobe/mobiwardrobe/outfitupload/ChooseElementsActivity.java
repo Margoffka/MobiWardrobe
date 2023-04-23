@@ -1,6 +1,9 @@
-package com.mobiwardrobe.mobiwardrobe.outfit;
+package com.mobiwardrobe.mobiwardrobe.outfitupload;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,14 +22,19 @@ import com.mobiwardrobe.mobiwardrobe.upload.Upload;
 
 import java.util.ArrayList;
 
-public class ChooseElementsActivity extends AppCompatActivity {
+public class ChooseElementsActivity extends AppCompatActivity implements ChooseElementListener{
     private ElementAdapter elementAdapter;
     private RecyclerView recyclerView;
+    private ImageView confirmElements;
+
     private ArrayList<Upload> uploads;
+
     private DatabaseReference databaseReference;
 
     private FirebaseUser firebaseUser;
     private String userID;
+
+    private ValueEventListener valueEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +53,9 @@ public class ChooseElementsActivity extends AppCompatActivity {
         uploads = new ArrayList<>();
         elementAdapter = new ElementAdapter(this, uploads);
         recyclerView.setAdapter(elementAdapter);
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        elementAdapter.setChooseElementListener(ChooseElementsActivity.this);
+
+        valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -58,6 +68,28 @@ public class ChooseElementsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+    @Override
+    public void onChooseElement(ArrayList<String> arrayList) {
+        confirmElements = findViewById(R.id.iv_confirm_elements);
+        confirmElements.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChooseElementsActivity.this, CreateOutfitActivity.class);
+                // passing array index
+//                intent.putExtra("Image", uploads.get(position).getImageUrl());
+//                intent.putExtra("Name", uploads.get(position).getName());
+//                intent.putExtra("Type", uploads.get(position).getType());
+//                intent.putExtra("Color", uploads.get(position).getColor());
+//                intent.putExtra("Season", uploads.get(position).getSeason());
+//                intent.putExtra("Weather", uploads.get(position).getWeather());
+//                intent.putExtra("Key", uploads.get(position).getKey());
+                intent.putExtra("ArrayUrls", arrayList);
+                startActivity(intent);
+                finish();
             }
         });
     }

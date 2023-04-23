@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ClothesFragment extends Fragment implements ImageAdapter.OnItemClickListener {
+public class ClothesFragment extends Fragment implements OnItemClickListener {
     private RecyclerView recyclerView;
     private ImageAdapter imageAdapter;
 
@@ -93,10 +93,8 @@ public class ClothesFragment extends Fragment implements ImageAdapter.OnItemClic
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(requireContext(), "Normal click at position: " + position, Toast.LENGTH_SHORT).show();
-        // Sending image id to FullScreenActivity
         Intent intent = new Intent(getContext(), DetailsClothesActivity.class);
-//        // passing array index
+        // passing array index
         intent.putExtra("Image", uploads.get(position).getImageUrl());
         intent.putExtra("Name", uploads.get(position).getName());
         intent.putExtra("Type", uploads.get(position).getType());
@@ -126,6 +124,7 @@ public class ClothesFragment extends Fragment implements ImageAdapter.OnItemClic
             }
         });
     }
+
 
     @Override
     public void onDestroy() {

@@ -204,7 +204,7 @@ public class UploadImageActivity extends AppCompatActivity {
                                     String key = databaseReference.push().getKey();
                                     databaseReference.child(key).setValue(upload);
                                     startActivity(new Intent(UploadImageActivity.this, MainActivity.class));
-                                    Toast.makeText(UploadImageActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(UploadImageActivity.this, "Успешно загружено", Toast.LENGTH_LONG).show();
                                 }
                             });
                             finish();

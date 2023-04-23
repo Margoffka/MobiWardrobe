@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.mobiwardrobe.mobiwardrobe.authorization.LoginActivity;
 import com.mobiwardrobe.mobiwardrobe.calendar.CalendarFragment;
 import com.mobiwardrobe.mobiwardrobe.clothes.ClothesFragment;
+import com.mobiwardrobe.mobiwardrobe.outfitupload.CreateOutfitActivity;
 import com.mobiwardrobe.mobiwardrobe.outfit.OutfitFragment;
 import com.mobiwardrobe.mobiwardrobe.profile.ProfileActivity;
 import com.mobiwardrobe.mobiwardrobe.upload.UploadImageActivity;
@@ -26,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private Button logoutBtn;
     private Button profileButton;
     private FirebaseAuth mAuth;
+    private FloatingActionButton fabAdd, addClothes, addOutfits;
+    Float translationYaxis = 100f;
+    Boolean menuOpen = false;
+    OvershootInterpolator interpolator = new OvershootInterpolator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
         bottomNav.setOnItemSelectedListener(navListener);
+        bottomNav.setSelectedItemId(R.id.item_clothes);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ClothesFragment()).commit();
 
@@ -41,16 +48,7 @@ public class MainActivity extends AppCompatActivity {
         profileButton = findViewById(R.id.bt_profile);
         mAuth = FirebaseAuth.getInstance();
 
-        //Change Activity to UploadImageActivity
-
-        final FloatingActionButton addImageBtn = findViewById(R.id.bt_add);
-
-        addImageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, UploadImageActivity.class));
-            }
-        });
+        showMenu();
 
         logoutBtn.setOnClickListener(view -> {
             mAuth.signOut();
@@ -60,6 +58,63 @@ public class MainActivity extends AppCompatActivity {
         profileButton.setOnClickListener(view -> {
             startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         });
+    }
+
+    private void showMenu() {
+        fabAdd = findViewById(R.id.fab_add);
+        addClothes = findViewById(R.id.fab_add_clothes);
+        addOutfits = findViewById(R.id.fab_add_outfit);
+
+        addClothes.setAlpha(0f);
+        addOutfits.setAlpha(0f);
+
+        addClothes.setTranslationY(translationYaxis);
+        addOutfits.setTranslationY(translationYaxis);
+
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (menuOpen) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            }
+        });
+
+        addClothes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, UploadImageActivity.class));
+                closeMenu();
+            }
+        });
+
+        addOutfits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CreateOutfitActivity.class));
+                closeMenu();
+            }
+        });
+    }
+
+    private void openMenu() {
+        menuOpen = !menuOpen;
+        fabAdd.setImageResource(R.drawable.ic_baseline_close_24);
+        addClothes.animate().translationY(0f).alpha(1f).setInterpolator(interpolator)
+                .setDuration(300).start();
+        addOutfits.animate().translationY(0f).alpha(1f).setInterpolator(interpolator)
+                .setDuration(300).start();
+    }
+
+    private void closeMenu() {
+        menuOpen = !menuOpen;
+        fabAdd.setImageResource(R.drawable.ic_baseline_add_24);
+        addClothes.animate().translationY(translationYaxis).alpha(0f).setInterpolator(interpolator)
+                .setDuration(300).start();
+        addOutfits.animate().translationY(translationYaxis).alpha(0f).setInterpolator(interpolator)
+                .setDuration(300).start();
     }
 
     @SuppressLint("NonConstantResourceId")

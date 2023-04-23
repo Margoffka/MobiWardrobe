@@ -9,6 +9,8 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -21,14 +23,7 @@
         android:theme="@style/Theme.MobiWardrobe"
         tools:targetApi="31">
         <activity
-            android:name=".ChooseOutfitElements"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".outfit.CreateOutfitActivity"
+            android:name=".outfitupload.CreateOutfitActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -87,7 +82,7 @@
         </activity>
         <activity android:name=".profile.ProfileActivity" />
         <activity android:name=".EditClothesActivity" />
-        <activity android:name="com.mobiwardrobe.mobiwardrobe.outfit.ChooseElementsActivity" />
+        <activity android:name="com.mobiwardrobe.mobiwardrobe.outfitupload.ChooseElementsActivity" />
     </application>
 
 </manifest>
