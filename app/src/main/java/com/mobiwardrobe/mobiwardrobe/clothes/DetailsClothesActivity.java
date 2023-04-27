@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe;
+package com.mobiwardrobe.mobiwardrobe.clothes;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.mobiwardrobe.mobiwardrobe.MainActivity;
+import com.mobiwardrobe.mobiwardrobe.R;
 
 public class DetailsClothesActivity extends AppCompatActivity {
     private ImageView detailsImage;

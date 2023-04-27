@@ -13,25 +13,26 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme">
 
+        <ImageButton
+            android:id="@+id/bt_revert_edit"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@color/my_purple"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_baseline_reply_24"
+            android:contentDescription="Revert" />
+
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Редактирование"
-            android:textAlignment="center"
+            android:layout_gravity="center"
             android:textColor="@color/very_dark_purple"
             android:textSize="28sp" />
 
     </androidx.appcompat.widget.Toolbar>
 
-    <ImageButton
-        android:id="@+id/bt_revert_edit"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@color/my_purple"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/ic_baseline_reply_24"
-        android:contentDescription="TODO" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_below="@id/toolbar_edit"

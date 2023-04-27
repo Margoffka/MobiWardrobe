@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe;
+package com.mobiwardrobe.mobiwardrobe.clothes;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -32,6 +32,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.mobiwardrobe.mobiwardrobe.MainActivity;
+import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.upload.Upload;
 
 public class EditClothesActivity extends AppCompatActivity {

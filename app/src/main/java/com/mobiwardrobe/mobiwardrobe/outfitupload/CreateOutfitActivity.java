@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.mobiwardrobe.mobiwardrobe.R;
+import com.mobiwardrobe.mobiwardrobe.adapters.CreateOutfitAdapter;
 import com.mobiwardrobe.mobiwardrobe.outfit.Outfit;
 
 import java.util.ArrayList;
@@ -123,9 +124,8 @@ public class CreateOutfitActivity extends AppCompatActivity implements CreateOut
                 if (!TextUtils.isEmpty(outfitNameTxt) && uris != null) {
                     Outfit outfitData = new Outfit(outfitNameTxt, urlsList);
 
-                    reference.child(outfitNameTxt).setValue(outfitData);
-//                    String key = reference.push().getKey();
-//                    reference.child(key).setValue(outfitData);
+                    String key = reference.push().getKey();
+                    reference.child(key).setValue(outfitData);
                     progressDialog.dismiss();
                     uris.clear();
 

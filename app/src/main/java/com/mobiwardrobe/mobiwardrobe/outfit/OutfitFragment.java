@@ -1,10 +1,10 @@
 package com.mobiwardrobe.mobiwardrobe.outfit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mobiwardrobe.mobiwardrobe.R;
+import com.mobiwardrobe.mobiwardrobe.adapters.OutfitsFragmentAdapter;
+import com.mobiwardrobe.mobiwardrobe.interfaces.OutfitClickListener;
 
 import java.util.ArrayList;
 
@@ -29,7 +31,6 @@ public class OutfitFragment extends Fragment implements OutfitClickListener {
     private OutfitsFragmentAdapter outfitsFragmentAdapter;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-    private ImageView deleteOutfit;
 
     private ArrayList<Outfit> outfits;
 
@@ -66,6 +67,7 @@ public class OutfitFragment extends Fragment implements OutfitClickListener {
                 outfits.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Outfit outfit = dataSnapshot.getValue(Outfit.class);
+                    outfit.setOutfitKey(dataSnapshot.getKey());
                     outfits.add(outfit);
                 }
                 outfitsFragmentAdapter.notifyDataSetChanged();
@@ -82,7 +84,13 @@ public class OutfitFragment extends Fragment implements OutfitClickListener {
 
     @Override
     public void onOutfitClick(int position) {
-
+        Intent intent = new Intent(getContext(),OutfitDetailsActivity.class);
+        intent.putExtra("Name", outfits.get(position).getOutfitName());
+//                intent.putExtra("Type", uploads.get(position).getType());
+//                intent.putExtra("Weather", uploads.get(position).getWeather());
+//                intent.putExtra("Key", uploads.get(position).getKey());
+        intent.putExtra("ImageUrls", outfits.get(position).getImageUrls());
+        startActivity(intent);
     }
 
     @Override

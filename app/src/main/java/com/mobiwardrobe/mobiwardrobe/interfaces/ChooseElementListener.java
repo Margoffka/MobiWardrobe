@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe.outfitupload;
+package com.mobiwardrobe.mobiwardrobe.interfaces;
 
 import java.util.ArrayList;
 

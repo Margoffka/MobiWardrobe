@@ -1,5 +1,6 @@
 package com.mobiwardrobe.mobiwardrobe.retrofit;
 
+import com.mobiwardrobe.mobiwardrobe.model.WeatherForecastResult;
 import com.mobiwardrobe.mobiwardrobe.model.WeatherResult;
 
 import io.reactivex.Observable;
@@ -13,4 +14,11 @@ public interface IOpenWeatherMap {
                                                  @Query("appid") String appid,
                                                  @Query("units") String unit,
                                                  @Query("lang") String lang);
+
+    @GET("forecast")
+    Observable<WeatherForecastResult> getForecastWeatherByLatLng(@Query("lat") String lat,
+                                                                 @Query("lon") String lng,
+                                                                 @Query("appid") String appid,
+                                                                 @Query("units") String unit,
+                                                                 @Query("lang") String lang);
 }

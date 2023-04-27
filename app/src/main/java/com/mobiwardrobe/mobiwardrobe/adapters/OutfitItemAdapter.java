@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe.outfit;
+package com.mobiwardrobe.mobiwardrobe.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

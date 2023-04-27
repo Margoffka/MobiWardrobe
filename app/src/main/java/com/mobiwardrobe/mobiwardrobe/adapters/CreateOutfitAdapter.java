@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe.outfitupload;
+package com.mobiwardrobe.mobiwardrobe.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

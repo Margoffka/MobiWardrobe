@@ -19,7 +19,10 @@ import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -32,11 +35,12 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.mobiwardrobe.mobiwardrobe.R;
+import com.mobiwardrobe.mobiwardrobe.adapters.WeatherForecastAdapter;
 import com.mobiwardrobe.mobiwardrobe.api.Api;
+import com.mobiwardrobe.mobiwardrobe.model.WeatherForecastResult;
 import com.mobiwardrobe.mobiwardrobe.model.WeatherResult;
 import com.mobiwardrobe.mobiwardrobe.retrofit.IOpenWeatherMap;
 import com.mobiwardrobe.mobiwardrobe.retrofit.RetrofitClient;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -60,6 +64,8 @@ public class WeatherFragment extends Fragment {
 
     CompositeDisposable compositeDisposable;
     IOpenWeatherMap mService;
+
+    RecyclerView recyclerForecast;
 
     public WeatherFragment() {
         compositeDisposable = new CompositeDisposable();
@@ -89,6 +95,11 @@ public class WeatherFragment extends Fragment {
 
         weatherPanel = view.findViewById(R.id.weather_panel);
         pbWeather = view.findViewById(R.id.pb_weather);
+
+        recyclerForecast = view.findViewById(R.id.rv_forecast);
+        recyclerForecast.setHasFixedSize(true);
+        recyclerForecast.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,
+                false));
 
         //Request permission
         Dexter.withActivity(getActivity())
@@ -129,9 +140,7 @@ public class WeatherFragment extends Fragment {
                 Api.current_location = locationResult.getLastLocation();
 
                 getWeatherInformation();
-
-                Log.d("Location", locationResult.getLastLocation().getLatitude() + "/"
-                        + locationResult.getLastLocation().getLongitude());
+                getForecastWeatherInformation();
             }
         };
     }
@@ -155,7 +164,7 @@ public class WeatherFragment extends Fragment {
                 .subscribe(new Consumer<WeatherResult>() {
                                @Override
                                public void accept(WeatherResult weatherResult) throws Exception {
-                                   Picasso.get().load(new StringBuilder("https://openweathermap.org/img/w/")
+                                   Glide.with(getContext()).load(new StringBuilder("https://openweathermap.org/img/w/")
                                            .append(weatherResult.getWeather().get(0).getIcon())
                                            .append(".png").toString()).into(weatherImage);
 
@@ -186,5 +195,38 @@ public class WeatherFragment extends Fragment {
                            }
                 )
         );
+    }
+
+    private void getForecastWeatherInformation() {
+        compositeDisposable.add(mService.getForecastWeatherByLatLng(String.valueOf(Api.current_location.getLatitude()),
+                        String.valueOf(Api.current_location.getLongitude()),
+                        Api.APP_ID,
+                        "metric", "ru")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<WeatherForecastResult>() {
+                               @Override
+                               public void accept(WeatherForecastResult weatherForecastResult) throws Exception {
+                                   displayForecastWeather(weatherForecastResult);
+                               }
+                           }, new Consumer<Throwable>() {
+                               @Override
+                               public void accept(Throwable throwable) throws Exception {
+                                   Log.d("ERROR", "" + throwable.getMessage());
+                               }
+                           }
+                )
+        );
+    }
+
+    private void displayForecastWeather(WeatherForecastResult weatherForecastResult ) {
+         WeatherForecastAdapter weatherForecastAdapter = new WeatherForecastAdapter(getContext(), weatherForecastResult);
+        recyclerForecast.setAdapter(weatherForecastAdapter);
+    }
+
+    @Override
+    public void onStop() {
+        compositeDisposable.clear();
+        super.onStop();
     }
 }

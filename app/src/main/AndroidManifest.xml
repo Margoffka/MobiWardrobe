@@ -33,7 +33,7 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".DetailsClothesActivity"
+            android:name=".clothes.DetailsClothesActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -81,8 +81,9 @@
                 android:value="" />
         </activity>
         <activity android:name=".profile.ProfileActivity" />
-        <activity android:name=".EditClothesActivity" />
-        <activity android:name="com.mobiwardrobe.mobiwardrobe.outfitupload.ChooseElementsActivity" />
+        <activity android:name=".clothes.EditClothesActivity" />
+        <activity android:name=".outfitupload.ChooseElementsActivity" />
+        <activity android:name="com.mobiwardrobe.mobiwardrobe.outfit.OutfitDetailsActivity" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe.outfitupload;
+package com.mobiwardrobe.mobiwardrobe.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.mobiwardrobe.mobiwardrobe.R;
+import com.mobiwardrobe.mobiwardrobe.interfaces.ChooseElementListener;
 import com.mobiwardrobe.mobiwardrobe.upload.Upload;
 
 import java.util.ArrayList;

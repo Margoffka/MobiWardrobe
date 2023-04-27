@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe.outfit;
+package com.mobiwardrobe.mobiwardrobe.interfaces;
 
 public interface OutfitClickListener {
     void onOutfitClick(int position);

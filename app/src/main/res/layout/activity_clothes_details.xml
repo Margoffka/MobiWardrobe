@@ -13,34 +13,35 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme">
 
+        <ImageButton
+            android:id="@+id/bt_show_uploads"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="10dp"
+            android:background="@color/my_purple"
+            android:contentDescription="Revert"
+            android:src="@drawable/ic_baseline_reply_24"
+            android:layout_gravity="start"/>
+
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Описание"
             android:textAlignment="center"
             android:textColor="@color/very_dark_purple"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            android:layout_gravity="center"/>
 
-
+        <ImageButton
+            android:id="@+id/bt_details_delete"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="#CD0606"
+            android:layout_marginEnd="20dp"
+            android:contentDescription="Delete"
+            android:src="@drawable/ic_baseline_delete_24"
+            android:layout_gravity="center_vertical|end"/>
     </androidx.appcompat.widget.Toolbar>
-
-    <ImageButton
-        android:id="@+id/bt_show_uploads"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="10dp"
-        android:background="@color/my_purple"
-        android:contentDescription="TODO"
-        android:src="@drawable/ic_baseline_reply_24" />
-
-    <ImageButton
-        android:id="@+id/bt_details_delete"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="330dp"
-        android:background="#CD0606"
-        android:contentDescription="TODO"
-        android:src="@drawable/ic_baseline_delete_24" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

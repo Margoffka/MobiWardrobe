@@ -16,8 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.mobiwardrobe.mobiwardrobe.authorization.LoginActivity;
 import com.mobiwardrobe.mobiwardrobe.calendar.CalendarFragment;
 import com.mobiwardrobe.mobiwardrobe.clothes.ClothesFragment;
-import com.mobiwardrobe.mobiwardrobe.outfitupload.CreateOutfitActivity;
 import com.mobiwardrobe.mobiwardrobe.outfit.OutfitFragment;
+import com.mobiwardrobe.mobiwardrobe.outfitupload.CreateOutfitActivity;
 import com.mobiwardrobe.mobiwardrobe.profile.ProfileActivity;
 import com.mobiwardrobe.mobiwardrobe.upload.UploadImageActivity;
 import com.mobiwardrobe.mobiwardrobe.weather.WeatherFragment;
@@ -136,8 +136,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        assert selectedFragment != null;
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+        if (selectedFragment != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+        }
         return true;
     };
 

@@ -13,6 +13,7 @@ public class Outfit {
     public Outfit(String outfitName, ArrayList<String> imageUrls) {
         this.outfitName = outfitName;
         this.imageUrls = imageUrls;
+        this.outfitKey = "";
     }
 
     public String getOutfitName() {

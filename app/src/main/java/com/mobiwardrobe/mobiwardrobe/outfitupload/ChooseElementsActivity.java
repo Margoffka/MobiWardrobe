@@ -18,11 +18,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mobiwardrobe.mobiwardrobe.R;
+import com.mobiwardrobe.mobiwardrobe.adapters.ElementAdapter;
+import com.mobiwardrobe.mobiwardrobe.interfaces.ChooseElementListener;
 import com.mobiwardrobe.mobiwardrobe.upload.Upload;
 
 import java.util.ArrayList;
 
-public class ChooseElementsActivity extends AppCompatActivity implements ChooseElementListener{
+public class ChooseElementsActivity extends AppCompatActivity implements ChooseElementListener {
     private ElementAdapter elementAdapter;
     private RecyclerView recyclerView;
     private ImageView confirmElements;

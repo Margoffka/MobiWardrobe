@@ -59,6 +59,37 @@
             app:menu="@menu/bottom_nav_menu" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_anchor="@+id/fab_add"
+        app:layout_anchorGravity="top|center">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add_outfit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/description_plus"
+            android:src="@drawable/ic_clothes"
+            app:backgroundTint="@color/my_purple"
+            app:fabSize="mini"
+            app:rippleColor="@color/white" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add_clothes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="110dp"
+            android:contentDescription="@string/description_plus"
+            android:src="@drawable/ic_t_shirt"
+            app:backgroundTint="@color/my_purple"
+            app:fabSize="mini"
+            app:rippleColor="@color/white" />
+
+    </LinearLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
@@ -69,32 +100,6 @@
         app:backgroundTint="@color/my_purple"
         app:layout_anchor="@id/bottomAppBar" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_outfit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="105dp"
-        android:contentDescription="@string/description_plus"
-        android:src="@drawable/ic_clothes"
-        app:backgroundTint="@color/my_purple"
-        app:layout_anchor="@+id/fragment_container"
-        app:layout_anchorGravity="bottom|center"
-        app:rippleColor="@color/white"
-        app:fabSize="mini"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_clothes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/description_plus"
-        android:src="@drawable/ic_t_shirt"
-        android:layout_marginBottom="160dp"
-        app:backgroundTint="@color/my_purple"
-        app:layout_anchor="@+id/fragment_container"
-        app:layout_anchorGravity="bottom|center"
-        app:rippleColor="@color/white"
-        app:fabSize="mini"
-        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

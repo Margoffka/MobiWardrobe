@@ -4,15 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
         android:id="@+id/weather_panel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:visibility="gone">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_forecast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+
         <TextView
+            android:layout_marginTop="20dp"
             android:id="@+id/tv_weather_city_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -179,6 +189,9 @@
 
         </TableLayout>
     </LinearLayout>
+
+
+
 
     <ProgressBar
         android:id="@+id/pb_weather"
