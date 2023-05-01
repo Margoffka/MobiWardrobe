@@ -6,16 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.mobiwardrobe.mobiwardrobe.authorization.LoginActivity;
 import com.mobiwardrobe.mobiwardrobe.calendar.CalendarFragment;
 import com.mobiwardrobe.mobiwardrobe.clothes.ClothesFragment;
+import com.mobiwardrobe.mobiwardrobe.outfit.FavoriteOutfitActivity;
 import com.mobiwardrobe.mobiwardrobe.outfit.OutfitFragment;
 import com.mobiwardrobe.mobiwardrobe.outfitupload.CreateOutfitActivity;
 import com.mobiwardrobe.mobiwardrobe.profile.ProfileActivity;
@@ -25,9 +25,8 @@ import com.mobiwardrobe.mobiwardrobe.weather.WeatherFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button logoutBtn;
-    private Button profileButton;
-    private FirebaseAuth mAuth;
+    Button profileButton;
+    ImageView toFavorite;
     private FloatingActionButton fabAdd, addClothes, addOutfits;
     Float translationYaxis = 100f;
     Boolean menuOpen = false;
@@ -44,15 +43,13 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ClothesFragment()).commit();
 
-        logoutBtn = findViewById(R.id.bt_logout);
+        toFavorite = findViewById(R.id.iv_go_to_favorites);
         profileButton = findViewById(R.id.bt_profile);
-        mAuth = FirebaseAuth.getInstance();
 
         showMenu();
 
-        logoutBtn.setOnClickListener(view -> {
-            mAuth.signOut();
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        toFavorite.setOnClickListener(view -> {
+             startActivity(new Intent(MainActivity.this, FavoriteOutfitActivity.class));
         });
 
         profileButton.setOnClickListener(view -> {

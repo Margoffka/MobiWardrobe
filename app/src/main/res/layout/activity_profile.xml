@@ -263,11 +263,11 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/editButton"
+        android:id="@+id/bt_logout"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:gravity="center"
-        android:text="Edit Profile"
+        android:text="Выйти из аккаунта"
         android:textSize="18sp"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"

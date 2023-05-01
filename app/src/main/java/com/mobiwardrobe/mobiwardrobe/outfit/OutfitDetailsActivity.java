@@ -1,11 +1,11 @@
 package com.mobiwardrobe.mobiwardrobe.outfit;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,7 +14,7 @@ import com.mobiwardrobe.mobiwardrobe.adapters.OutfitItemAdapter;
 
 import java.util.ArrayList;
 
-public class OutfitDetailsActivity extends Activity {
+public class OutfitDetailsActivity extends AppCompatActivity {
     private OutfitItemAdapter outfitItemAdapter;
     private RecyclerView recyclerView;
 
@@ -33,8 +33,6 @@ public class OutfitDetailsActivity extends Activity {
         recyclerView = findViewById(R.id.rv_outfit_details);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-
-
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null){

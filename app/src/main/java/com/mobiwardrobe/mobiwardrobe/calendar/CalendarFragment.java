@@ -104,12 +104,12 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         }
     }
 
-//    @Override
-//    protected void onResume()
-//    {
-//        super.onResume();
-//        setEventAdapter();
-//    }
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        setEventAdapter();
+    }
 
     private void setEventAdapter()
     {

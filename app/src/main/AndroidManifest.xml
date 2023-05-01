@@ -84,6 +84,7 @@
         <activity android:name=".clothes.EditClothesActivity" />
         <activity android:name=".outfitupload.ChooseElementsActivity" />
         <activity android:name="com.mobiwardrobe.mobiwardrobe.outfit.OutfitDetailsActivity" />
+        <activity android:name="com.mobiwardrobe.mobiwardrobe.outfit.FavoriteOutfitActivity" />
     </application>
 
 </manifest>

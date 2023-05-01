@@ -5,20 +5,19 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="14dp">
 
 
     <androidx.cardview.widget.CardView
-        android:layout_width="180dp"
-        android:layout_height="210dp"
+        android:layout_width="170dp"
+        android:layout_height="220dp"
         app:cardCornerRadius="20dp"
-        app:cardElevation="10dp">
-
+        app:cardElevation="1dp">
 
         <ImageView
             android:id="@+id/iv_clothes_item"
-            android:layout_width="180dp"
-            android:layout_height="210dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:scaleType="centerCrop" />
 
     </androidx.cardview.widget.CardView>

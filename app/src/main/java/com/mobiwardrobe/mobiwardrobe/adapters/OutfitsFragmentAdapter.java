@@ -59,6 +59,7 @@ public class OutfitsFragmentAdapter extends RecyclerView.Adapter<OutfitsFragment
         favoriteListRef = database.getReference("users").child(userID).child("favoriteList");
 
         String name = outfits.get(position).getOutfitName();
+        ArrayList<String> imageUrls = outfits.get(position).getImageUrls();
         holder.favoriteChecker(outfits.get(position).getOutfitKey());
 
         String outfitKey = outfits.get(position).getOutfitKey();
@@ -77,11 +78,11 @@ public class OutfitsFragmentAdapter extends RecyclerView.Adapter<OutfitsFragment
                             } else {
                                 Outfit favoriteOutfit = outfits.get(holder.getAdapterPosition());
                                 favoriteOutfit.setOutfitKey(outfitKey);
+                                favoriteOutfit.setOutfitName(name);
+                                favoriteOutfit.setImageUrls(imageUrls);
 
                                 favoriteReference.child(outfitKey).setValue(true);
                                 favoriteListRef.child(outfitKey).setValue(favoriteOutfit);
-
-                                favoriteOutfit.setOutfitName(name);
                             }
                             favoriteChecker = false;
                         }

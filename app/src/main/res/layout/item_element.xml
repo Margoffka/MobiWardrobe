@@ -10,15 +10,15 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_choose_element"
-        android:layout_width="180dp"
-        android:layout_height="210dp"
+        android:layout_width="170dp"
+        android:layout_height="220dp"
         app:cardCornerRadius="20dp"
-        app:cardElevation="10dp">
+        app:cardElevation="1dp">
 
         <ImageView
             android:id="@+id/iv_element_item"
-            android:layout_width="180dp"
-            android:layout_height="210dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:scaleType="centerCrop" />
 
         <CheckBox
