@@ -1,7 +1,6 @@
 package com.mobiwardrobe.mobiwardrobe.calendar;
 
 import org.threeten.bp.LocalDate;
-import org.threeten.bp.LocalTime;
 
 import java.util.ArrayList;
 
@@ -15,7 +14,7 @@ public class Event
 
         for(Event event : eventsList)
         {
-            if(event.getDate().equals(date))
+            if(event.getDate().equals(date.toString()))
                 events.add(event);
         }
 
@@ -23,10 +22,13 @@ public class Event
     }
     
     private String name;
-    private LocalDate date;
-    private LocalTime time;
+    private String date;
+    private String time;
 
-    public Event(String name, LocalDate date, LocalTime time)
+    public Event() {
+    }
+
+    public Event(String name, String date, String time)
     {
         this.name = name;
         this.date = date;
@@ -43,22 +45,22 @@ public class Event
         this.name = name;
     }
 
-    public LocalDate getDate()
+    public String getDate()
     {
         return date;
     }
 
-    public void setDate(LocalDate date)
+    public void setDate(String date)
     {
         this.date = date;
     }
 
-    public LocalTime getTime()
+    public String getTime()
     {
         return time;
     }
 
-    public void setTime(LocalTime time)
+    public void setTime(String time)
     {
         this.time = time;
     }

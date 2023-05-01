@@ -1,5 +1,6 @@
 package com.mobiwardrobe.mobiwardrobe.outfit;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -52,6 +53,7 @@ public class FavoriteOutfitActivity extends AppCompatActivity {
 
         favoriteListRef = database.getReference("users").child(userID).child("favoriteList");
         valueEventListener = favoriteListRef.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 favoriteOutfits.clear();

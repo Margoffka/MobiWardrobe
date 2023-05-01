@@ -19,20 +19,17 @@ import java.util.ArrayList;
 public class CreateOutfitAdapter extends RecyclerView.Adapter<CreateOutfitAdapter.CreateOutfitHolder> {
     private Context context;
     private ArrayList<Uri> uriArrayList;
-    CountOfImagesWhenRemoved countOfImagesWhenRemoved;
 
-    public CreateOutfitAdapter(Context context, ArrayList<Uri> uriArrayList,
-                               CountOfImagesWhenRemoved countOfImagesWhenRemoved) {
+    public CreateOutfitAdapter(Context context, ArrayList<Uri> uriArrayList) {
         this.context = context;
         this.uriArrayList = uriArrayList;
-        this.countOfImagesWhenRemoved = countOfImagesWhenRemoved;
     }
 
     @NonNull
     @Override
     public CreateOutfitHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_show_element, parent, false);
-        return new CreateOutfitHolder(view, countOfImagesWhenRemoved);
+        return new CreateOutfitHolder(view);
     }
 
     @Override
@@ -45,7 +42,6 @@ public class CreateOutfitAdapter extends RecyclerView.Adapter<CreateOutfitAdapte
                 uriArrayList.remove(uriArrayList.get(position));
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, getItemCount());
-                countOfImagesWhenRemoved.clicked(uriArrayList.size());
             }
         });
     }
@@ -58,17 +54,11 @@ public class CreateOutfitAdapter extends RecyclerView.Adapter<CreateOutfitAdapte
     public static class CreateOutfitHolder extends RecyclerView.ViewHolder {
         ImageView showElementImage;
         ImageView deleteElement;
-        CountOfImagesWhenRemoved countOfImagesWhenRemoved;
 
-        public CreateOutfitHolder(@NonNull View itemView, CountOfImagesWhenRemoved countOfImagesWhenRemoved) {
+        public CreateOutfitHolder(@NonNull View itemView) {
             super(itemView);
             showElementImage = itemView.findViewById(R.id.iv_show_element_item);
             deleteElement = itemView.findViewById(R.id.iv_delete_element_item);
         }
     }
-
-    public interface CountOfImagesWhenRemoved {
-        void clicked(int getSize);
-    }
-
 }

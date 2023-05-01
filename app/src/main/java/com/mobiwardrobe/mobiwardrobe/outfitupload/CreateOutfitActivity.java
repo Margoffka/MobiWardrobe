@@ -24,7 +24,7 @@ import com.mobiwardrobe.mobiwardrobe.outfit.Outfit;
 
 import java.util.ArrayList;
 
-public class CreateOutfitActivity extends AppCompatActivity implements CreateOutfitAdapter.CountOfImagesWhenRemoved {
+public class CreateOutfitActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     CreateOutfitAdapter adapter;
 
@@ -91,15 +91,10 @@ public class CreateOutfitActivity extends AppCompatActivity implements CreateOut
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL, false));
-        adapter = new CreateOutfitAdapter(this, uris, this);
+        adapter = new CreateOutfitAdapter(this, uris);
         recyclerView.setAdapter(adapter);
     }
 
-
-    @Override
-    public void clicked(int getSize) {
-
-    }
 
     private void getImages() {
         Bundle bundle = getIntent().getExtras();

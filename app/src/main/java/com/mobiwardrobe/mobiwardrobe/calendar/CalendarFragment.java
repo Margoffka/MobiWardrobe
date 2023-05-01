@@ -18,6 +18,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.mobiwardrobe.mobiwardrobe.R;
 
@@ -34,6 +41,14 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     private Button previousMonthBtn;
     private Button nextMonthBtn;
     private Button newEventBtn;
+
+    FirebaseDatabase database;
+    DatabaseReference reference;
+
+    private FirebaseUser firebaseUser;
+    private String userID;
+
+    ValueEventListener valueEventListener;
 
     @Nullable
     @Override
@@ -52,6 +67,28 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         previousMonthBtn = view.findViewById(R.id.bt_previous_month);
         nextMonthBtn = view.findViewById(R.id.bt_next_month);
         newEventBtn = view.findViewById(R.id.bt_new_event);
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        userID = firebaseUser.getUid();
+
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference("users").child(userID).child("calendar");
+
+        valueEventListener = reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Event.eventsList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Event event = dataSnapshot.getValue(Event.class);
+                    Event.eventsList.add(event);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
         setMonthView();
 
         //previous month action
@@ -62,7 +99,6 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
                 setMonthView();
             }
         });
-
         //next month action
         nextMonthBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +107,6 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
                 setMonthView();
             }
         });
-
         //add new event
         newEventBtn.setOnClickListener(new View.OnClickListener() {
             @Override
