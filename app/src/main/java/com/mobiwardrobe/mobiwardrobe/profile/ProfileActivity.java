@@ -1,9 +1,12 @@
 package com.mobiwardrobe.mobiwardrobe.profile;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,10 +20,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.mobiwardrobe.mobiwardrobe.MainActivity;
 import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.authorization.LoginActivity;
 import com.mobiwardrobe.mobiwardrobe.authorization.User;
+import com.mobiwardrobe.mobiwardrobe.notifications.AlarmHelper;
+import com.mobiwardrobe.mobiwardrobe.notifications.NotificationHelper;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -28,7 +32,10 @@ public class ProfileActivity extends AppCompatActivity {
     DatabaseReference reference;
     String userID;
     FirebaseAuth mAuth;
-    Button logoutBtn;
+    Button logoutBtn, sendMessage, setAlarm;
+    private int selectedHour;
+    private int selectedMinute;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +47,8 @@ public class ProfileActivity extends AppCompatActivity {
         userID = user.getUid();
         mAuth = FirebaseAuth.getInstance();
         logoutBtn = findViewById(R.id.bt_logout);
+        sendMessage = findViewById(R.id.bt_send_message);
+        setAlarm = findViewById(R.id.bt_set_alarm);
 
         final TextView titleName = (TextView) findViewById(R.id.tv_title_name);
         final TextView titleEmail = (TextView) findViewById(R.id.tv_title_email);
@@ -72,5 +81,31 @@ public class ProfileActivity extends AppCompatActivity {
             mAuth.signOut();
             startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
         });
+
+        sendMessage.setOnClickListener(view -> {
+            String title = "Запланируйте комплект!";
+            String message = "На улице солнышко, не забудьте взять солнечные очки :)";
+            NotificationHelper.sendNotification(this, title, message);
+        });
+
+        setAlarm.setOnClickListener(v -> {
+            showTimePickerDialog();
+        });
+    }
+
+    private void showTimePickerDialog() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                selectedHour = hourOfDay;
+                selectedMinute = minute;
+
+                // Установка будильника
+                AlarmHelper.setRepeatingAlarm(ProfileActivity.this, selectedHour, selectedMinute);
+                Log.d("MESSAGE", selectedHour + " " + selectedMinute);
+            }
+        }, 0, 0, true);
+
+        timePickerDialog.show();
     }
 }

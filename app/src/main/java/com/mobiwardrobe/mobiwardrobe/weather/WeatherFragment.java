@@ -1,6 +1,7 @@
 package com.mobiwardrobe.mobiwardrobe.weather;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Looper;
@@ -29,20 +30,31 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.mobiwardrobe.mobiwardrobe.R;
+import com.mobiwardrobe.mobiwardrobe.adapters.OutfitItemAdapter;
 import com.mobiwardrobe.mobiwardrobe.adapters.WeatherForecastAdapter;
 import com.mobiwardrobe.mobiwardrobe.api.Api;
 import com.mobiwardrobe.mobiwardrobe.model.WeatherForecastResult;
 import com.mobiwardrobe.mobiwardrobe.model.WeatherResult;
+import com.mobiwardrobe.mobiwardrobe.outfit.Outfit;
 import com.mobiwardrobe.mobiwardrobe.retrofit.IOpenWeatherMap;
 import com.mobiwardrobe.mobiwardrobe.retrofit.RetrofitClient;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -65,7 +77,10 @@ public class WeatherFragment extends Fragment {
     CompositeDisposable compositeDisposable;
     IOpenWeatherMap mService;
 
-    RecyclerView recyclerForecast;
+    RecyclerView recyclerForecast, outfitRecycler;
+    ArrayList<String> imageUrls;
+    ArrayList<Outfit> outfits;
+    OutfitItemAdapter outfitItemAdapter;
 
     public WeatherFragment() {
         compositeDisposable = new CompositeDisposable();
@@ -100,6 +115,15 @@ public class WeatherFragment extends Fragment {
         recyclerForecast.setHasFixedSize(true);
         recyclerForecast.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,
                 false));
+
+        outfits = new ArrayList<>();
+        imageUrls = new ArrayList<>();
+        outfitRecycler = view.findViewById(R.id.rv_outfit_weather);
+        outfitRecycler.setHasFixedSize(true);
+        outfitRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,
+                false));
+        setOutfitRecycler(outfitRecycler, imageUrls);
+        getFromDb();
 
         //Request permission
         Dexter.withActivity(getActivity())
@@ -195,6 +219,7 @@ public class WeatherFragment extends Fragment {
                            }
                 )
         );
+
     }
 
     private void getForecastWeatherInformation() {
@@ -219,8 +244,8 @@ public class WeatherFragment extends Fragment {
         );
     }
 
-    private void displayForecastWeather(WeatherForecastResult weatherForecastResult ) {
-         WeatherForecastAdapter weatherForecastAdapter = new WeatherForecastAdapter(getContext(), weatherForecastResult);
+    private void displayForecastWeather(WeatherForecastResult weatherForecastResult) {
+        WeatherForecastAdapter weatherForecastAdapter = new WeatherForecastAdapter(getContext(), weatherForecastResult);
         recyclerForecast.setAdapter(weatherForecastAdapter);
     }
 
@@ -228,5 +253,49 @@ public class WeatherFragment extends Fragment {
     public void onStop() {
         compositeDisposable.clear();
         super.onStop();
+    }
+
+    private void setOutfitRecycler(RecyclerView recyclerView, ArrayList<String> imageUrls){
+        outfitItemAdapter = new OutfitItemAdapter(getContext(), imageUrls, false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        recyclerView.setAdapter(outfitItemAdapter);
+    }
+
+    private void getFromDb() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = firebaseUser.getUid();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("users").child(userID).child("outfits");
+        ValueEventListener valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                outfits.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Outfit outfit = dataSnapshot.getValue(Outfit.class);
+                    outfit.setOutfitKey(dataSnapshot.getKey());
+                    outfits.add(outfit);
+                }
+
+                // Выбираем случайный комплект из списка
+                if (outfits.size() > 0) {
+                    int randomIndex = new Random().nextInt(outfits.size());
+                    Outfit randomOutfit = outfits.get(randomIndex);
+
+                    // Добавьте код, который использует выбранный случайный комплект
+                    // Например, передайте его в адаптер или выполните другую необходимую логику
+
+                    // Пример:
+                    imageUrls.clear();
+                    imageUrls.addAll(randomOutfit.getImageUrls());
+                    outfitItemAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 }

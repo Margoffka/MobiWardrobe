@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +24,7 @@ import com.mobiwardrobe.mobiwardrobe.weather.WeatherFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button profileButton;
+    ImageView profileView;
     ImageView toFavorite;
     private FloatingActionButton fabAdd, addClothes, addOutfits;
     Float translationYaxis = 100f;
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ClothesFragment()).commit();
 
         toFavorite = findViewById(R.id.iv_go_to_favorites);
-        profileButton = findViewById(R.id.bt_profile);
+        profileView = findViewById(R.id.iv_profile);
 
         showMenu();
 
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
              startActivity(new Intent(MainActivity.this, FavoriteOutfitActivity.class));
         });
 
-        profileButton.setOnClickListener(view -> {
+        profileView.setOnClickListener(view -> {
             startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         });
     }

@@ -239,21 +239,50 @@
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/password"
+                android:id="@+id/message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Password"
+                android:text="Send Message"
                 android:textColor="@color/my_purple"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/profilePassword"
+            <Button
+                android:id="@+id/bt_send_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="password"
+                android:text="message"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Set Alarm"
+                android:textColor="@color/my_purple"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/bt_set_alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="alarm"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/black"
                 android:textSize="18sp" />

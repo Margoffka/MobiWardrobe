@@ -1,81 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".outfitupload.CreateOutfitActivity">
 
-    <EditText
-        android:id="@+id/et_outfit_name_upload"
-        android:layout_width="374dp"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_create_outfit"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="141dp"
-        android:layout_marginEnd="4dp"
-        android:background="@drawable/purple_border"
-        android:hint="Введите название комплекта"
-        android:padding="16dp"
-        android:textColor="@color/my_purple" />
+        android:layout_gravity="top"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
 
-    <Button
-        android:id="@+id/bt_outfit_save"
-        android:layout_width="363dp"
-        android:layout_height="62dp"
-        android:layout_alignTop="@+id/et_outfit_name_upload"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="81dp"
-        android:layout_marginEnd="17dp"
-        android:text="Сохранить"
-        android:textSize="18sp"
-        app:cornerRadius="20dp" />
+        <ImageButton
+            android:id="@+id/bt_revert_edit"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:background="@color/my_purple"
+            android:contentDescription="Revert"
+            android:src="@drawable/ic_baseline_reply_24" />
 
+    </androidx.appcompat.widget.Toolbar>
 
     <Button
         android:id="@+id/bt_outfit_add"
         android:layout_width="363dp"
         android:layout_height="62dp"
-        android:layout_below="@+id/bt_outfit_save"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="11dp"
+        android:layout_gravity="center"
         android:text="Добавить"
         android:textSize="18sp"
-        app:cornerRadius="20dp" />
-
+        app:cornerRadius="20dp"
+        android:layout_marginTop="100dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_show_elements"
         android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:scrollbars="horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@color/my_grey" />
+
+
+    <EditText
+        android:id="@+id/et_outfit_name_upload"
+        android:layout_width="374dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chooseImages"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="71dp"
-        android:layout_marginBottom="0dp"
-        android:scrollbars="horizontal" />
+        android:layout_gravity="center"
+        android:background="@drawable/purple_border"
+        android:hint="Введите название комплекта"
+        android:padding="16dp"
+        android:textColor="@color/my_purple"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:layout_width="374dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/purple_border"
+        android:hint="Введите погоду для комплекта"
+        android:padding="16dp"
+        android:textColor="@color/my_purple"
+        android:layout_marginTop="20dp"/>
 
     <Button
-        android:id="@+id/chooseImages"
+        android:id="@+id/bt_outfit_save"
         android:layout_width="363dp"
         android:layout_height="62dp"
-        android:layout_below="@+id/bt_outfit_add"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="11dp"
-        android:text="Выбрать из галереи"
+        android:layout_gravity="center"
+        android:text="Сохранить"
         android:textSize="18sp"
-        app:cornerRadius="20dp" />
+        app:cornerRadius="20dp"
+        android:layout_marginTop="40dp"/>
 
 
-</RelativeLayout>
+</LinearLayout>

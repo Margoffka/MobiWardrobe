@@ -1,6 +1,7 @@
 package com.mobiwardrobe.mobiwardrobe.calendar;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -84,8 +86,6 @@ public class EventEditActivity extends AppCompatActivity implements OutfitClickL
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-
     }
 
     private void initWidgets() {
@@ -116,15 +116,31 @@ public class EventEditActivity extends AppCompatActivity implements OutfitClickL
         finish();
     }
 
+    private int previousPosition = RecyclerView.NO_POSITION;
+    private View previousView = null;
+
     @Override
-    public void onOutfitClick(int position) {
+    public void onOutfitClick(int position, View view) {
+
+        if (previousView != null) {
+            Drawable previousDrawable = ContextCompat.getDrawable(EventEditActivity.this, R.drawable.grey_border_background);
+            previousView.setBackground(previousDrawable);
+        }
+
         String outfitKey = outfits.get(position).getOutfitKey();
         String name = outfits.get(position).getOutfitName();
         ArrayList<String> imageUrls = outfits.get(position).getImageUrls();
+
         Outfit eventOutfit = outfits.get(position);
         eventOutfit.setOutfitKey(outfitKey);
         eventOutfit.setOutfitName(name);
         eventOutfit.setImageUrls(imageUrls);
+
+        Drawable drawable = ContextCompat.getDrawable(EventEditActivity.this, R.drawable.white_background);
+        view.setBackground(drawable);
+
+        previousPosition = position;
+        previousView = view;
 
         saveEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +148,6 @@ public class EventEditActivity extends AppCompatActivity implements OutfitClickL
                 saveEventAction(eventOutfit, outfitKey);
             }
         });
-
     }
 
     @Override

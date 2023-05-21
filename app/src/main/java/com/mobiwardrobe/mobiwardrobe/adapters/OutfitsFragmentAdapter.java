@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mobiwardrobe.mobiwardrobe.R;
+import com.mobiwardrobe.mobiwardrobe.calendar.EventEditActivity;
 import com.mobiwardrobe.mobiwardrobe.interfaces.OutfitClickListener;
 import com.mobiwardrobe.mobiwardrobe.outfit.Outfit;
 
@@ -44,7 +45,7 @@ public class OutfitsFragmentAdapter extends RecyclerView.Adapter<OutfitsFragment
     @NonNull
     @Override
     public OutfitFragmentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new OutfitFragmentHolder(LayoutInflater.from(context).inflate(R.layout.recycler_outfit, parent, false));
+        return new OutfitFragmentHolder(LayoutInflater.from(context).inflate(R.layout.item_recycler_outfit, parent, false));
     }
 
     @Override
@@ -117,6 +118,10 @@ public class OutfitsFragmentAdapter extends RecyclerView.Adapter<OutfitsFragment
             outfitRecycler = itemView.findViewById(R.id.rv_outfit_items);
             deleteOutfit = itemView.findViewById(R.id.iv_delete_outfit);
 
+            if(context instanceof EventEditActivity){
+                deleteOutfit.setVisibility(View.INVISIBLE);
+            }
+
             deleteOutfit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -132,13 +137,18 @@ public class OutfitsFragmentAdapter extends RecyclerView.Adapter<OutfitsFragment
             if (outfitClickListener != null) {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    outfitClickListener.onOutfitClick(position);
+                    outfitClickListener.onOutfitClick(position, itemView);
                 }
             }
         }
 
         public void favoriteChecker(String outfitKey) {
             favoriteButton = itemView.findViewById(R.id.iv_add_to_favorites);
+
+            if(context instanceof EventEditActivity){
+                favoriteButton.setVisibility(View.INVISIBLE);
+            }
+
             favoriteReference = database.getReference("users").child(userID).child("favorites");
             firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             userID = firebaseUser.getUid();
@@ -166,7 +176,7 @@ public class OutfitsFragmentAdapter extends RecyclerView.Adapter<OutfitsFragment
     }
 
     private void setItemRecycler(RecyclerView recyclerView, ArrayList<String> imageUrls){
-        OutfitItemAdapter outfitItemAdapter = new OutfitItemAdapter(context, imageUrls);
+        OutfitItemAdapter outfitItemAdapter = new OutfitItemAdapter(context, imageUrls, false);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
         recyclerView.setAdapter(outfitItemAdapter);
     }

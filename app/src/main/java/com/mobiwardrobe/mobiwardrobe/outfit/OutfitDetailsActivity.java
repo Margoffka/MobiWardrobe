@@ -40,7 +40,7 @@ public class OutfitDetailsActivity extends AppCompatActivity {
             imageUrls = bundle.getStringArrayList("ImageUrls");
         }
 
-        outfitItemAdapter = new OutfitItemAdapter(this, imageUrls);
+        outfitItemAdapter = new OutfitItemAdapter(this, imageUrls, false);
         recyclerView.setAdapter(outfitItemAdapter);
     }
 }

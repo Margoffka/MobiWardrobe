@@ -18,15 +18,19 @@ public class OutfitItemAdapter extends RecyclerView.Adapter<OutfitItemAdapter.Ou
     private Context context;
     private ArrayList<String> urlsList;
 
-    public OutfitItemAdapter(Context context, ArrayList<String> urlsList) {
+    private boolean isCalendarAdapter;
+
+    public OutfitItemAdapter(Context context, ArrayList<String> urlsList, boolean isCalendarAdapter) {
         this.context = context;
         this.urlsList = urlsList;
+        this.isCalendarAdapter = isCalendarAdapter;
     }
 
     @NonNull
     @Override
     public OutfitItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_outfit, parent, false);
+        int layoutRes = isCalendarAdapter ? R.layout.item_calendar_outfit : R.layout.item_outfit;
+        View view = LayoutInflater.from(context).inflate(layoutRes, parent, false);
         return new OutfitItemHolder(view);
     }
 

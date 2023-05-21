@@ -1,5 +1,6 @@
 package com.mobiwardrobe.mobiwardrobe.outfit;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,16 +35,16 @@ public class OutfitFragment extends Fragment implements OutfitClickListener {
 
     private ArrayList<Outfit> outfits;
 
-    private DatabaseReference databaseReference;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference, favoriteReference, favoriteListRef;
     private FirebaseUser firebaseUser;
     private String userID;
 
-    private ValueEventListener valueEventListener;
+    private ValueEventListener valueEventListener, favoriteListener;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getActivity().setTitle("Outfit");
         View view = inflater.inflate(R.layout.fragment_outfit, container, false);
         progressBar = view.findViewById(R.id.pb_outfit_fragment);
 
@@ -60,8 +61,13 @@ public class OutfitFragment extends Fragment implements OutfitClickListener {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         userID = firebaseUser.getUid();
 
+        database = FirebaseDatabase.getInstance();
+        favoriteReference = database.getReference("users").child(userID).child("favorites");
+        favoriteListRef = database.getReference("users").child(userID).child("favoriteList");
+
         databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userID).child("outfits");
         valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 outfits.clear();
@@ -83,12 +89,9 @@ public class OutfitFragment extends Fragment implements OutfitClickListener {
     }
 
     @Override
-    public void onOutfitClick(int position) {
+    public void onOutfitClick(int position, View view) {
         Intent intent = new Intent(getContext(),OutfitDetailsActivity.class);
         intent.putExtra("Name", outfits.get(position).getOutfitName());
-//                intent.putExtra("Type", uploads.get(position).getType());
-//                intent.putExtra("Weather", uploads.get(position).getWeather());
-//                intent.putExtra("Key", uploads.get(position).getKey());
         intent.putExtra("ImageUrls", outfits.get(position).getImageUrls());
         startActivity(intent);
     }
@@ -96,8 +99,10 @@ public class OutfitFragment extends Fragment implements OutfitClickListener {
     @Override
     public void onDeleteClick(int position) {
         Outfit selectedItem = outfits.get(position);
-        final String selectedKey = selectedItem.getOutfitName();
+        final String selectedKey = selectedItem.getOutfitKey();
         databaseReference.child(selectedKey).removeValue();
+        favoriteReference.child(selectedKey).removeValue();
+        favoriteListRef.child(selectedKey).removeValue();
         Toast.makeText(requireContext(), "Комплект удалён", Toast.LENGTH_SHORT).show();
     }
 }

@@ -3,8 +3,10 @@ package com.mobiwardrobe.mobiwardrobe.calendar;
 import static com.mobiwardrobe.mobiwardrobe.calendar.CalendarUtils.daysInMonthArray;
 import static com.mobiwardrobe.mobiwardrobe.calendar.CalendarUtils.monthYearFromDate;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.mobiwardrobe.mobiwardrobe.R;
+import com.mobiwardrobe.mobiwardrobe.outfit.Outfit;
 
 import org.threeten.bp.LocalDate;
 
@@ -43,12 +46,13 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     private Button newEventBtn;
 
     FirebaseDatabase database;
-    DatabaseReference reference;
+    DatabaseReference reference, outfitReference;
 
     private FirebaseUser firebaseUser;
     private String userID;
 
-    ValueEventListener valueEventListener;
+    ValueEventListener valueEventListener, outfitListener;
+    private ArrayList<Outfit> outfits;
 
     @Nullable
     @Override
@@ -72,22 +76,6 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         userID = firebaseUser.getUid();
 
         database = FirebaseDatabase.getInstance();
-        reference = database.getReference("users").child(userID).child("calendar");
-
-        valueEventListener = reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Event.eventsList.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Event event = dataSnapshot.getValue(Event.class);
-                    Event.eventsList.add(event);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
 
         setMonthView();
 
@@ -140,17 +128,55 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         setEventAdapter();
     }
 
-    private void setEventAdapter()
-    {
-        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.selectedDate);
-        EventAdapter eventAdapter = new EventAdapter(getContext(), dailyEvents);
-        eventListView.setAdapter(eventAdapter);
-    }
+    private void setEventAdapter() {
 
+        outfits = new ArrayList<>();
+        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.selectedDate);
+
+        EventAdapter eventAdapter = new EventAdapter(getContext(), dailyEvents, outfits);
+        eventListView.setAdapter(eventAdapter);
+
+        outfitReference = FirebaseDatabase.getInstance().getReference("users").child(userID).child("outfits");
+        outfitListener = outfitReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                outfits.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Outfit outfit = dataSnapshot.getValue(Outfit.class);
+                    outfit.setOutfitKey(dataSnapshot.getKey());
+                    outfits.add(outfit);
+                }
+                eventAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        reference = database.getReference("users").child(userID).child("calendar");
+        valueEventListener = reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d("DataSnapshot", "DataSnapshot: " + snapshot.toString());
+                Event.eventsList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Event event = dataSnapshot.getValue(Event.class);
+                    Event.eventsList.add(event);
+                }
+                eventAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
 }

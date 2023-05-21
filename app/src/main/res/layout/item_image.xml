@@ -12,12 +12,14 @@
         android:layout_width="170dp"
         android:layout_height="220dp"
         app:cardCornerRadius="20dp"
-        app:cardElevation="1dp">
+        app:cardElevation="1dp"
+        app:cardBackgroundColor="@color/my_grey"
+        app:contentPadding="4dp">
 
         <ImageView
             android:id="@+id/iv_clothes_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:scaleType="centerCrop" />
 
     </androidx.cardview.widget.CardView>
