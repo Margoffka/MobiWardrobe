@@ -50,10 +50,10 @@ public class ProfileActivity extends AppCompatActivity {
         sendMessage = findViewById(R.id.bt_send_message);
         setAlarm = findViewById(R.id.bt_set_alarm);
 
-        final TextView titleName = (TextView) findViewById(R.id.tv_title_name);
-        final TextView titleEmail = (TextView) findViewById(R.id.tv_title_email);
-        final TextView profileName = (TextView) findViewById(R.id.tv_profile_name);
-        final TextView profileEmail = (TextView) findViewById(R.id.tv_profile_email);
+        final TextView titleName = findViewById(R.id.tv_title_name);
+        final TextView titleEmail = findViewById(R.id.tv_title_email);
+        final TextView profileName = findViewById(R.id.tv_profile_name);
+        final TextView profileEmail = findViewById(R.id.tv_profile_email);
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

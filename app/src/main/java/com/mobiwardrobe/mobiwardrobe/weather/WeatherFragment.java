@@ -46,46 +46,36 @@ import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.adapters.OutfitItemAdapter;
 import com.mobiwardrobe.mobiwardrobe.adapters.WeatherForecastAdapter;
 import com.mobiwardrobe.mobiwardrobe.api.Api;
+import com.mobiwardrobe.mobiwardrobe.interfaces.WeatherCallback;
+import com.mobiwardrobe.mobiwardrobe.interfaces.WeatherForecastCallback;
 import com.mobiwardrobe.mobiwardrobe.model.WeatherForecastResult;
 import com.mobiwardrobe.mobiwardrobe.model.WeatherResult;
 import com.mobiwardrobe.mobiwardrobe.outfit.Outfit;
-import com.mobiwardrobe.mobiwardrobe.retrofit.IOpenWeatherMap;
-import com.mobiwardrobe.mobiwardrobe.retrofit.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
-
-public class WeatherFragment extends Fragment {
+public class WeatherFragment extends Fragment implements WeatherCallback, WeatherForecastCallback {
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationCallback locationCallback;
     private LocationRequest locationRequest;
 
-    CoordinatorLayout coordinatorLayout;
-    ImageView weatherImage;
-    TextView cityName, humidity, sunrise, sunset, pressure,
+    private CoordinatorLayout coordinatorLayout;
+    private ImageView weatherImage;
+    private TextView cityName, humidity, sunrise, sunset, pressure,
             temperature, description, dateTime, wind, geoCoords;
-    LinearLayout weatherPanel;
-    ProgressBar pbWeather;
+    private LinearLayout weatherPanel;
+    private ProgressBar pbWeather;
 
-    CompositeDisposable compositeDisposable;
-    IOpenWeatherMap mService;
+    private RecyclerView recyclerForecast, outfitRecycler;
+    private ArrayList<String> imageUrls;
+    private ArrayList<Outfit> outfits;
+    private OutfitItemAdapter outfitItemAdapter;
 
-    RecyclerView recyclerForecast, outfitRecycler;
-    ArrayList<String> imageUrls;
-    ArrayList<Outfit> outfits;
-    OutfitItemAdapter outfitItemAdapter;
+    private WeatherController weatherController;
 
     public WeatherFragment() {
-        compositeDisposable = new CompositeDisposable();
-        Retrofit retrofit = RetrofitClient.getInstance();
-        mService = retrofit.create(IOpenWeatherMap.class);
     }
 
     @Nullable
@@ -122,10 +112,11 @@ public class WeatherFragment extends Fragment {
         outfitRecycler.setHasFixedSize(true);
         outfitRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,
                 false));
+
+        weatherController = new WeatherController();
+
         setOutfitRecycler(outfitRecycler, imageUrls);
         getFromDb();
-
-        //Request permission
         Dexter.withActivity(getActivity())
                 .withPermissions(Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.ACCESS_FINE_LOCATION)
@@ -152,8 +143,10 @@ public class WeatherFragment extends Fragment {
                     }
                 }).check();
 
+
         return view;
     }
+
 
     private void buildLocationCallBack() {
         locationCallback = new LocationCallback() {
@@ -178,84 +171,73 @@ public class WeatherFragment extends Fragment {
         locationRequest.setSmallestDisplacement(10.0f);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        weatherController.clearDisposables();
+    }
+
     private void getWeatherInformation() {
-        compositeDisposable.add(mService.getWeatherByLatLng(String.valueOf(Api.current_location.getLatitude()),
-                        String.valueOf(Api.current_location.getLongitude()),
-                        Api.APP_ID,
-                        "metric", "ru")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<WeatherResult>() {
-                               @Override
-                               public void accept(WeatherResult weatherResult) throws Exception {
-                                   Glide.with(getContext()).load(new StringBuilder("https://openweathermap.org/img/w/")
-                                           .append(weatherResult.getWeather().get(0).getIcon())
-                                           .append(".png").toString()).into(weatherImage);
-
-                                   cityName.setText(weatherResult.getName());
-                                   description.setText(new StringBuilder("Погода в: ")
-                                           .append(weatherResult.getName()).toString());
-                                   temperature.setText(new StringBuilder(String.valueOf(weatherResult.getMain()
-                                           .getTemp())).append("°C").toString());
-                                   dateTime.setText(Api.convertUnixToDate(weatherResult.getDt()));
-                                   pressure.setText(new StringBuilder(String.valueOf(weatherResult.getMain()
-                                           .getPressure())).append(" hpa").toString());
-                                   humidity.setText(new StringBuilder(String.valueOf(weatherResult.getMain()
-                                           .getHumidity())).append(" %").toString());
-                                   sunrise.setText(Api.convertUnixToHour(weatherResult.getSys().getSunrise()));
-                                   sunset.setText(Api.convertUnixToHour(weatherResult.getSys().getSunset()));
-                                   geoCoords.setText(new StringBuilder("[").append(weatherResult.getCoord()
-                                           .toString()).append("]").toString());
-
-                                   //Display panel
-                                   weatherPanel.setVisibility(View.VISIBLE);
-                                   pbWeather.setVisibility(View.GONE);
-                               }
-                           }, new Consumer<Throwable>() {
-                               @Override
-                               public void accept(Throwable throwable) throws Exception {
-                                   Toast.makeText(getActivity(), "" + throwable.getMessage(), Toast.LENGTH_LONG).show();
-                               }
-                           }
-                )
-        );
-
+        weatherController.getWeatherInformation(Api.current_location, this);
     }
 
     private void getForecastWeatherInformation() {
-        compositeDisposable.add(mService.getForecastWeatherByLatLng(String.valueOf(Api.current_location.getLatitude()),
-                        String.valueOf(Api.current_location.getLongitude()),
-                        Api.APP_ID,
-                        "metric", "ru")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<WeatherForecastResult>() {
-                               @Override
-                               public void accept(WeatherForecastResult weatherForecastResult) throws Exception {
-                                   displayForecastWeather(weatherForecastResult);
-                               }
-                           }, new Consumer<Throwable>() {
-                               @Override
-                               public void accept(Throwable throwable) throws Exception {
-                                   Log.d("ERROR", "" + throwable.getMessage());
-                               }
-                           }
-                )
-        );
+        weatherController.getForecastWeatherInformation(Api.current_location, this);
     }
 
-    private void displayForecastWeather(WeatherForecastResult weatherForecastResult) {
+    // Implement the WeatherCallback and WeatherForecastCallback methods
+    @Override
+    public void onWeatherDataReceived(WeatherResult weatherResult) {
+        // Handle received weather data
+        Glide.with(getContext()).load(new StringBuilder("https://openweathermap.org/img/w/")
+                .append(weatherResult.getWeather().get(0).getIcon())
+                .append(".png").toString()).into(weatherImage);
+
+        cityName.setText(weatherResult.getName());
+        description.setText(new StringBuilder("Погода в: ")
+                .append(weatherResult.getName()).toString());
+        temperature.setText(new StringBuilder(String.valueOf(weatherResult.getMain()
+                .getTemp())).append("°C").toString());
+        dateTime.setText(Api.convertUnixToDate(weatherResult.getDt()));
+        pressure.setText(new StringBuilder(String.valueOf(weatherResult.getMain()
+                .getPressure())).append(" hpa").toString());
+        humidity.setText(new StringBuilder(String.valueOf(weatherResult.getMain()
+                .getHumidity())).append(" %").toString());
+        sunrise.setText(Api.convertUnixToHour(weatherResult.getSys().getSunrise()));
+        sunset.setText(Api.convertUnixToHour(weatherResult.getSys().getSunset()));
+        geoCoords.setText(new StringBuilder("[").append(weatherResult.getCoord()
+                .toString()).append("]").toString());
+
+        //Display panel
+        weatherPanel.setVisibility(View.VISIBLE);
+        pbWeather.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onWeatherDataError(Throwable throwable) {
+        // Handle weather data error
+        Toast.makeText(getActivity(), "" + throwable.getMessage(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onForecastWeatherDataReceived(WeatherForecastResult weatherForecastResult) {
+        // Handle received forecast weather data
         WeatherForecastAdapter weatherForecastAdapter = new WeatherForecastAdapter(getContext(), weatherForecastResult);
         recyclerForecast.setAdapter(weatherForecastAdapter);
     }
 
     @Override
-    public void onStop() {
-        compositeDisposable.clear();
-        super.onStop();
+    public void onForecastWeatherDataError(Throwable throwable) {
+        // Handle forecast weather data error
+        Log.d("ERROR", "" + throwable.getMessage());
     }
 
-    private void setOutfitRecycler(RecyclerView recyclerView, ArrayList<String> imageUrls){
+    private void setOutfitRecycler(RecyclerView recyclerView, ArrayList<String> imageUrls) {
         outfitItemAdapter = new OutfitItemAdapter(getContext(), imageUrls, false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         recyclerView.setAdapter(outfitItemAdapter);
@@ -267,7 +249,7 @@ public class WeatherFragment extends Fragment {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = database.getReference("users").child(userID).child("outfits");
-        ValueEventListener valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -283,10 +265,6 @@ public class WeatherFragment extends Fragment {
                     int randomIndex = new Random().nextInt(outfits.size());
                     Outfit randomOutfit = outfits.get(randomIndex);
 
-                    // Добавьте код, который использует выбранный случайный комплект
-                    // Например, передайте его в адаптер или выполните другую необходимую логику
-
-                    // Пример:
                     imageUrls.clear();
                     imageUrls.addAll(randomOutfit.getImageUrls());
                     outfitItemAdapter.notifyDataSetChanged();
@@ -299,3 +277,4 @@ public class WeatherFragment extends Fragment {
         });
     }
 }
+
