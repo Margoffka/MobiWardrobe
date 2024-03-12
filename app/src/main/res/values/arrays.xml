@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="weather_options">
+        <item>Ясно</item>
+        <item>Облачно</item>
+        <item>Пасмурно</item>
+        <item>Дождливо</item>
+    </string-array>
+
+    <string-array name="clothes_types">
+        <item>Верхняя одежда</item>
+        <item>Верх</item>
+        <item>Низ</item>
+        <item>Обувь</item>
+        <item>Сумки</item>
+        <item>Аксессуары</item>
+    </string-array>
+
+    <string-array name="clothes_colors">
+        <item>Чёрный</item>
+        <item>Белый</item>
+        <item>Красный</item>
+        <item>Оранжевый</item>
+        <item>Жёлтый</item>
+        <item>Зелёный</item>
+        <item>Голубой</item>
+        <item>Синий</item>
+        <item>Фиолетовый</item>
+    </string-array>
+
+    <string-array name="clothes_seasons">
+        <item>Весна</item>
+        <item>Лето</item>
+        <item>Осень</item>
+        <item>Зима</item>
+    </string-array>
+</resources>

@@ -8,13 +8,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:indeterminateTint="@color/my_purple"/>
+        android:indeterminateTint="@color/color_new_purple"/>
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="4"
         android:text="Загрузка..."
         android:textSize="18sp"
-        android:textColor="@color/my_purple"
+        android:textColor="@color/color_new_purple"
         android:gravity="start|center_vertical"/>
 </LinearLayout>

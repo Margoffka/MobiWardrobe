@@ -2,6 +2,8 @@ package com.mobiwardrobe.mobiwardrobe.outfit;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.adapters.OutfitsFragmentAdapter;
+import com.mobiwardrobe.mobiwardrobe.model.Outfit;
 
 import java.util.ArrayList;
 
@@ -33,6 +36,8 @@ public class FavoriteOutfitActivity extends AppCompatActivity {
 
     private ArrayList<Outfit> favoriteOutfits;
     private ValueEventListener valueEventListener;
+
+    private ImageButton backButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,5 +75,14 @@ public class FavoriteOutfitActivity extends AppCompatActivity {
             }
         });
 
+        backButton = findViewById(R.id.bt_show_uploads);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                startActivity(new Intent(FavoriteOutfitActivity.this, MainActivity.class));
+                finish();
+            }
+        });
     }
 }

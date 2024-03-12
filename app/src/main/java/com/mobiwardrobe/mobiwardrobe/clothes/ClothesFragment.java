@@ -26,7 +26,7 @@ import com.google.firebase.storage.StorageReference;
 import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.adapters.ImageAdapter;
 import com.mobiwardrobe.mobiwardrobe.interfaces.OnItemClickListener;
-import com.mobiwardrobe.mobiwardrobe.upload.Upload;
+import com.mobiwardrobe.mobiwardrobe.model.Upload;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +53,7 @@ public class ClothesFragment extends Fragment implements OnItemClickListener {
         View view = inflater.inflate(R.layout.fragment_clothes, container, false);
 
         recyclerView = view.findViewById(R.id.rv_clothes);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
 
         uploads = new ArrayList<>();

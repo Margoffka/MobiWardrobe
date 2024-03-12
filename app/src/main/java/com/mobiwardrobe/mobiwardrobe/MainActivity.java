@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     Boolean menuOpen = false;
     OvershootInterpolator interpolator = new OvershootInterpolator();
 
+    TextView toolbarTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         toFavorite = findViewById(R.id.iv_go_to_favorites);
         profileView = findViewById(R.id.iv_profile);
+        toolbarTitle = findViewById(R.id.tv_toolbar);
 
         showMenu();
 
@@ -55,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         });
     }
+
 
     private void showMenu() {
         fabAdd = findViewById(R.id.fab_add);
@@ -116,24 +121,31 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     private final BottomNavigationView.OnItemSelectedListener navListener = item -> {
         Fragment selectedFragment = null;
+        String title = "";
+
 
         switch (item.getItemId()) {
             case R.id.item_weather:
                 selectedFragment = new WeatherFragment();
+                title = "Погода";
                 break;
             case R.id.item_clothes:
                 selectedFragment = new ClothesFragment();
+                title = "Погода";
                 break;
             case R.id.item_outfit:
                 selectedFragment = new OutfitFragment();
+                title = "Комплекты";
                 break;
             case R.id.item_calendar:
                 selectedFragment = new CalendarFragment();
+                title = "Календарь";
                 break;
         }
 
         if (selectedFragment != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+//            toolbarTitle.setText(title);
         }
         return true;
     };

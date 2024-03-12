@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.adapters.OutfitsFragmentAdapter;
 import com.mobiwardrobe.mobiwardrobe.interfaces.OutfitClickListener;
+import com.mobiwardrobe.mobiwardrobe.model.Outfit;
 
 import java.util.ArrayList;
 
@@ -39,8 +40,6 @@ public class OutfitFragment extends Fragment implements OutfitClickListener {
     private DatabaseReference databaseReference, favoriteReference, favoriteListRef;
     private FirebaseUser firebaseUser;
     private String userID;
-
-    private ValueEventListener valueEventListener, favoriteListener;
 
     @Nullable
     @Override
@@ -66,7 +65,7 @@ public class OutfitFragment extends Fragment implements OutfitClickListener {
         favoriteListRef = database.getReference("users").child(userID).child("favoriteList");
 
         databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userID).child("outfits");
-        valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -92,7 +91,10 @@ public class OutfitFragment extends Fragment implements OutfitClickListener {
     public void onOutfitClick(int position, View view) {
         Intent intent = new Intent(getContext(),OutfitDetailsActivity.class);
         intent.putExtra("Name", outfits.get(position).getOutfitName());
+        intent.putExtra("Weather", outfits.get(position).getOutfitWeather());
+        intent.putExtra("Description", outfits.get(position).getOutfitDescription());
         intent.putExtra("ImageUrls", outfits.get(position).getImageUrls());
+        intent.putExtra("Key", outfits.get(position).getOutfitKey());
         startActivity(intent);
     }
 

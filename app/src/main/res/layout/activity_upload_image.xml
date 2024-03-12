@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_wall"
+    android:id="@+id/upload_image_activity_layout">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -13,22 +15,30 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme">
 
+        <ImageButton
+            android:id="@+id/bt_show_uploads"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="10dp"
+            android:background="?attr/colorPrimary"
+            android:contentDescription="Revert"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:layout_gravity="start"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Добавление одежды"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
     </androidx.appcompat.widget.Toolbar>
 
-    <ImageButton
-        android:id="@+id/bt_show_uploads"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@color/my_purple"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/ic_baseline_reply_24"
-        android:contentDescription="TODO" />
-
     <androidx.core.widget.NestedScrollView
-        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
         android:orientation="vertical">
 
         <ScrollView
@@ -39,10 +49,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="20dp"
-                app:cardCornerRadius="30dp"
+                android:layout_marginBottom="15dp"
+                app:cardCornerRadius="10dp"
                 app:cardElevation="20dp">
 
                 <LinearLayout
@@ -51,7 +61,8 @@
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/purple_border"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="20dp"
+                    android:gravity="center">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -63,75 +74,144 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@color/my_purple"
-                            android:src="@drawable/ic_baseline_add_photo_alternate_white" />
+                            android:src="@drawable/ic_baseline_add_photo_alternate_white"
+                            android:visibility="gone" />
 
                         <EditText
                             android:id="@+id/et_image_name"
-                            android:layout_width="200dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Введите название" />
-
-                        <ImageButton
-                            android:id="@+id/bt_choose_photo"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@color/my_purple"
-                            android:src="@drawable/ic_baseline_add_a_photo_24" />
+                            android:hint="Введите название"
+                            android:textAlignment="center"
+                            android:textColor="@color/color_new_purple"
+                            android:textSize="18sp"
+                            android:maxLines="1"/>
 
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/iv_for_upload"
-                        android:layout_width="170dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_baseline_add_photo_alternate_24" />
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cv_for_upload"
+                        android:layout_width="140dp"
+                        android:layout_height="180dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="15dp"
+                        android:minHeight="180dp"
+                        android:padding="10dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="20dp">
 
-                    <EditText
-                        android:id="@+id/et_type"
-                        android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/purple_border"
-                        android:gravity="start|center_vertical"
-                        android:hint="Введите тип одежды"
-                        android:padding="16dp"
-                        android:textColor="@color/my_purple" />
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_baseline_add_photo_alternate_24" />
 
-                    <EditText
-                        android:id="@+id/et_color"
-                        android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/purple_border"
-                        android:gravity="start|center_vertical"
-                        android:hint="Введите цвет одежды"
-                        android:padding="16dp"
-                        android:textColor="@color/my_purple" />
+                        <ImageView
+                            android:id="@+id/iv_for_upload"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:scaleType="fitXY"/>
 
-                    <EditText
-                        android:id="@+id/et_season"
-                        android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/purple_border"
-                        android:gravity="start|center_vertical"
-                        android:hint="Введите пору года"
-                        android:padding="16dp"
-                        android:textColor="@color/my_purple" />
+                    </androidx.cardview.widget.CardView>
 
-                    <EditText
-                        android:id="@+id/et_weather"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/purple_border"
-                        android:gravity="start|center_vertical"
-                        android:hint="Введите погоду"
-                        android:padding="16dp"
-                        android:textColor="@color/my_purple" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Тип одежды"
+                            android:textColor="@color/my_purple"
+                            android:textSize="16sp" />
+
+                        <Spinner
+                            android:id="@+id/sp_type"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/purple_border"
+                            android:gravity="start|center_vertical"
+                            android:paddingStart="5dp"
+                            android:textColor="@color/my_purple" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Цвет одежды"
+                            android:textColor="@color/my_purple"
+                            android:textSize="16sp" />
+
+                        <Spinner
+                            android:id="@+id/sp_color"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/purple_border"
+                            android:gravity="start|center_vertical"
+                            android:paddingStart="5dp"
+                            android:textColor="@color/my_purple" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Сезон"
+                            android:textColor="@color/my_purple"
+                            android:textSize="16sp" />
+
+                        <Spinner
+                            android:id="@+id/sp_season"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/purple_border"
+                            android:gravity="start|center_vertical"
+                            android:paddingStart="5dp"
+                            android:textColor="@color/my_purple" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Погода"
+                            android:textColor="@color/my_purple"
+                            android:textSize="16sp" />
+
+                        <Spinner
+                            android:id="@+id/sp_weather"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/purple_border"
+                            android:gravity="start|center_vertical"
+                            android:paddingStart="5dp"
+                            android:textColor="@color/my_purple" />
+                    </LinearLayout>
 
                     <ProgressBar
                         android:id="@+id/pb_image_upload"
@@ -143,10 +223,10 @@
                     <Button
                         android:id="@+id/bt_upload"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="56dp"
                         android:text="Сохранить"
-                        android:textSize="18sp"
-                        app:cornerRadius="20dp" />
+                        android:textSize="16sp"
+                        app:cornerRadius="10dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </ScrollView>

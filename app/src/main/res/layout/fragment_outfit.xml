@@ -9,11 +9,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
+<!--    <TextView-->
+<!--        android:id="@+id/some_view_from_outfit_fragment"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="some_view_from_outfit_fragment" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_outfit_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="10dp"
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 

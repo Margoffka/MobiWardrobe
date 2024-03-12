@@ -24,7 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.adapters.OutfitsFragmentAdapter;
 import com.mobiwardrobe.mobiwardrobe.interfaces.OutfitClickListener;
-import com.mobiwardrobe.mobiwardrobe.outfit.Outfit;
+import com.mobiwardrobe.mobiwardrobe.model.Event;
+import com.mobiwardrobe.mobiwardrobe.model.Outfit;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalTime;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 
 public class EventEditActivity extends AppCompatActivity implements OutfitClickListener {
     private EditText eventNameET;
-    private TextView eventDateTV, eventTimeTV;
+    private TextView eventDateTV;
     private Button saveEvent;
 
     private LocalTime time;
@@ -60,7 +61,6 @@ public class EventEditActivity extends AppCompatActivity implements OutfitClickL
         time = LocalTime.now();
         date = CalendarUtils.selectedDate;
         eventDateTV.setText(CalendarUtils.formattedDate(date));
-        eventTimeTV.setText(CalendarUtils.formattedTime(time));
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         userID = firebaseUser.getUid();
@@ -91,7 +91,6 @@ public class EventEditActivity extends AppCompatActivity implements OutfitClickL
     private void initWidgets() {
         eventNameET = findViewById(R.id.eventNameET);
         eventDateTV = findViewById(R.id.eventDateTV);
-        eventTimeTV = findViewById(R.id.eventTimeTV);
         saveEvent = findViewById(R.id.bt_event_save);
 
         outfits = new ArrayList<>();
@@ -108,9 +107,8 @@ public class EventEditActivity extends AppCompatActivity implements OutfitClickL
     public void saveEventAction(Outfit eventOutfit, String outfitKey) {
         String eventName = eventNameET.getText().toString().trim();
         String dateTxt = date.toString();
-        String timeTxt = eventTimeTV.getText().toString();
 
-        Event newEvent = new Event(eventName, dateTxt, timeTxt);
+        Event newEvent = new Event(eventName, dateTxt);
         eventReference.child(dateTxt).setValue(newEvent);
         eventReference.child(dateTxt).child(outfitKey).setValue(eventOutfit);
         finish();

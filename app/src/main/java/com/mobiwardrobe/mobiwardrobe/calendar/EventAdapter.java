@@ -23,7 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.adapters.OutfitItemAdapter;
-import com.mobiwardrobe.mobiwardrobe.outfit.Outfit;
+import com.mobiwardrobe.mobiwardrobe.model.Event;
+import com.mobiwardrobe.mobiwardrobe.model.Outfit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +32,9 @@ import java.util.List;
 public class EventAdapter extends ArrayAdapter<Event> {
 
     private ArrayList<Outfit> outfits, calendarOutfits;
+    List<Event> events;
     FirebaseDatabase database;
-    DatabaseReference reference, outfitReference;
+    DatabaseReference reference, eventReference;
 
     private FirebaseUser firebaseUser;
     private String userID;
@@ -42,6 +44,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
     public EventAdapter(@NonNull Context context, List<Event> events, ArrayList<Outfit> outfits) {
         super(context, 0, events);
         this.outfits = outfits;
+        this.events = events;
     }
 
     @NonNull
@@ -61,8 +64,11 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
         eventTitle = convertView.findViewById(R.id.tv_event_title);
         eventRecycler = convertView.findViewById(R.id.rv_event_items);
+        outfitTitle = convertView.findViewById(R.id.tv_outfit_title);
+        deleteEvent = convertView.findViewById(R.id.iv_delete_event);
+        changeEvent = convertView.findViewById(R.id.iv_change_event);
 
-        eventTitle.setText(event.getName() + " " + event.getTime());
+        eventTitle.setText(event.getName());
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         userID = firebaseUser.getUid();
@@ -75,6 +81,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 calendarOutfits.clear();
+                Event.eventsList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     for (Outfit outfit : outfits) {
                         String outfitKey = outfit.getOutfitKey();
@@ -93,11 +100,20 @@ public class EventAdapter extends ArrayAdapter<Event> {
                     OutfitItemAdapter outfitItemAdapter = new OutfitItemAdapter(getContext(), imageUrls, true);
                     eventRecycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
                     eventRecycler.setAdapter(outfitItemAdapter);
+                    outfitTitle.setText(calendarOutfits.get(position).getOutfitName());
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        deleteEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reference.removeValue();
+                events.clear();
             }
         });
 

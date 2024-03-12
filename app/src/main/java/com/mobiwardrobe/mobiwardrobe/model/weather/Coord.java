@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe.model;
+package com.mobiwardrobe.mobiwardrobe.model.weather;
 
 import androidx.annotation.NonNull;
 

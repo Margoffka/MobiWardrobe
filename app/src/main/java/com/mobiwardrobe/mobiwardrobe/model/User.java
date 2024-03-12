@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe.authorization;
+package com.mobiwardrobe.mobiwardrobe.model;
 
 public class User {
     public String firstname;

@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_wall"
     android:orientation="vertical"
-    tools:context=".outfitupload.CreateOutfitActivity">
+    tools:context=".outfitupload.CreateOutfitActivity"
+    android:id="@+id/create_outfit_activity_layout">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_create_outfit"
@@ -17,66 +19,198 @@
         android:theme="?attr/actionBarTheme">
 
         <ImageButton
-            android:id="@+id/bt_revert_edit"
+            android:id="@+id/bt_show_uploads"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="start"
             android:layout_marginStart="10dp"
-            android:background="@color/my_purple"
+            android:background="?attr/colorPrimary"
             android:contentDescription="Revert"
-            android:src="@drawable/ic_baseline_reply_24" />
+            android:src="@drawable/ic_baseline_arrow_back_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Создайте комплект"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
 
     </androidx.appcompat.widget.Toolbar>
 
-    <Button
-        android:id="@+id/bt_outfit_add"
-        android:layout_width="363dp"
-        android:layout_height="62dp"
-        android:layout_gravity="center"
-        android:text="Добавить"
-        android:textSize="18sp"
-        app:cornerRadius="20dp"
-        android:layout_marginTop="100dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_show_elements"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:scrollbars="horizontal"
-        android:layout_marginTop="10dp"
-        android:background="@color/my_grey" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_create_outfit">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/white_background"
+                    android:orientation="vertical"
+                    android:minHeight="180dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_show_elements"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
+                        android:padding="15dp"
+                        android:scrollbars="horizontal"
+                        android:visibility="gone" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cv_for_outfit"
+                        android:layout_width="115dp"
+                        android:layout_height="150dp"
+                        android:layout_margin="15dp"
+                        android:padding="10dp"
+                        android:visibility="visible"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="20dp">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_baseline_add_photo_alternate_24" />
+
+                        <ImageView
+                            android:id="@+id/iv_outfit_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:scaleType="fitXY" />
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/white_background"
+                        android:orientation="vertical"
+                        android:padding="15dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Название комплекта"
+                                android:textColor="@color/my_purple"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/et_outfit_name_upload"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="3dp"
+                                android:background="@drawable/purple_border"
+                                android:gravity="start|center_vertical"
+                                android:maxLines="1"
+                                android:paddingStart="15dp"
+                                android:textColor="@color/my_purple" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="Погода"
+                                android:textColor="@color/my_purple"
+                                android:textSize="16sp" />
+
+                            <Spinner
+                                android:id="@+id/sp_weather_outfit"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="3dp"
+                                android:background="@drawable/purple_border"
+                                android:gravity="start|center_vertical"
+                                android:paddingStart="5dp"
+                                android:textColor="@color/my_purple" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="Описание"
+                                android:textColor="@color/my_purple"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/et_description"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:background="@drawable/purple_border"
+                                android:gravity="start|center_vertical"
+                                android:minHeight="45dp"
+                                android:paddingStart="15dp"
+                                android:textColor="@color/my_purple"
+                                android:padding="5dp"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
 
 
-    <EditText
-        android:id="@+id/et_outfit_name_upload"
-        android:layout_width="374dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/purple_border"
-        android:hint="Введите название комплекта"
-        android:padding="16dp"
-        android:textColor="@color/my_purple"
-        android:layout_marginTop="20dp"/>
+                    </LinearLayout>
 
-    <EditText
-        android:layout_width="374dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/purple_border"
-        android:hint="Введите погоду для комплекта"
-        android:padding="16dp"
-        android:textColor="@color/my_purple"
-        android:layout_marginTop="20dp"/>
+                </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/bt_outfit_save"
-        android:layout_width="363dp"
-        android:layout_height="62dp"
-        android:layout_gravity="center"
-        android:text="Сохранить"
-        android:textSize="18sp"
-        app:cornerRadius="20dp"
-        android:layout_marginTop="40dp"/>
+                <Button
+                    android:id="@+id/bt_outfit_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:text="Сохранить"
+                    android:textSize="18sp"
+                    app:cornerRadius="10dp" />
 
-
+            </LinearLayout>
+        </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

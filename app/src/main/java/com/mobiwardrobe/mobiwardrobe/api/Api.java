@@ -4,6 +4,7 @@ import android.location.Location;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Api {
      public static final String APP_ID = "46ad59ca92ba76f25d277f314a48596f";
@@ -11,7 +12,7 @@ public class Api {
 
      public static String convertUnixToDate(long dt) {
           Date date = new Date(dt*1000L);
-          SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm EEE MM yyyy");
+          SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm EEE MM yyyy", new Locale("ru"));
           String formatted =  simpleDateFormat.format(date);
           return formatted;
      }

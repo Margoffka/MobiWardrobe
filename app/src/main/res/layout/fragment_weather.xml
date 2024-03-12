@@ -19,188 +19,130 @@
             android:paddingRight="30dp"
             android:visibility="visible">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_weather_city_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Weather in Minsk, GB"
-                android:textColor="@color/very_dark_purple"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/iv_weather_image"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/ic_baseline_wb_sunny_24" />
-
-                <TextView
-                    android:id="@+id/tv_weather_temperature"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="14C"
-                    android:textColor="@color/very_dark_purple"
-                    android:textSize="50sp"
-                    android:textStyle="bold" />
+                    android:layout_gravity="start"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_baseline_location_on_24" />
+
+                    <TextView
+                        android:id="@+id/tv_weather_city_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dp"
+                        android:text="Weather in Minsk, GB"
+                        android:textColor="@color/very_dark_purple"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/white2_background"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_weather_image"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/ic_baseline_wb_sunny_24" />
+
+                        <TextView
+                            android:id="@+id/tv_weather_temperature"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:text="14C"
+                            android:textColor="@color/very_dark_purple"
+                            android:textSize="40sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_date_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="23:50 СР 05 2023"
+                        android:textColor="@color/very_dark_purple"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:id="@+id/tv_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Влажность:"
+                            android:textColor="@color/very_dark_purple"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_weather_humidity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="100%"
+                            android:textSize="22sp"
+                            android:textColor="@color/very_dark_purple" />
+                    </LinearLayout>
+                </LinearLayout>
+
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_description"
+                android:layout_marginTop="20dp"
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Weather in Minsk, GB"
-                android:textColor="@color/very_dark_purple"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:text="Не придумали что надеть?
+                Мы подобрали Вам комплект по погоде:"
+                android:textColor="@color/white"
+                android:background="@drawable/purple_background"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:padding="10dp"/>
 
-            <TextView
-                android:id="@+id/tv_date_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Weather in Minsk, GB"
-                android:textColor="@color/very_dark_purple"
-                android:textSize="24sp"
-                android:textStyle="bold" />
 
-        </LinearLayout>
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/white_background"
-                android:padding="16dp"
-                android:stretchColumns="*">
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Wind" />
-
-                    <TextView
-                        android:id="@+id/tv_weather_wind"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_marginLeft="8dp"
-                        android:text="Speed: 1 Deg: 1" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pressure" />
-
-                    <TextView
-                        android:id="@+id/tv_weather_pressure"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_marginLeft="8dp"
-                        android:text="1013.75 hpa" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Humidity" />
-
-                    <TextView
-                        android:id="@+id/tv_weather_humidity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_marginLeft="8dp"
-                        android:text="100%" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sunrise" />
-
-                    <TextView
-                        android:id="@+id/tv_weather_sunrise"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_marginLeft="8dp"
-                        android:text="10:00" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sunset" />
-
-                    <TextView
-                        android:id="@+id/tv_weather_sunset"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_marginLeft="8dp"
-                        android:text="18:00" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Geo coords" />
-
-                    <TextView
-                        android:id="@+id/tv_weather_coords"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_marginLeft="8dp"
-                        android:text="[32,0-81,0]" />
-                </TableRow>
-            </TableLayout>
+<!--            <TextView-->
+<!--                android:id="@+id/some_view_from_weather_fragment"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Some View from Weather Fragment" />-->
 
             <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:paddingRight="10dp"
+                android:background="@drawable/grey_border_background"
                 android:paddingLeft="10dp"
-                android:background="@drawable/grey_border_background">
+                android:paddingRight="10dp">
 
                 <LinearLayout
                     android:id="@+id/linear_layout"
@@ -208,19 +150,20 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingTop="7dp">
 
                     <TextView
                         android:id="@+id/tv_weather_outfit_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:text="TextView"
                         android:textColor="#000000"
-                        android:textSize="22sp" />
+                        android:textSize="20sp" />
                 </LinearLayout>
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_outfit_weather"
@@ -239,7 +182,7 @@
                 android:id="@+id/rv_forecast"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="5dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

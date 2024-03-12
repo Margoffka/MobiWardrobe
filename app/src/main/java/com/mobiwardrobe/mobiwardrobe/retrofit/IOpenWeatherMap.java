@@ -1,7 +1,7 @@
 package com.mobiwardrobe.mobiwardrobe.retrofit;
 
-import com.mobiwardrobe.mobiwardrobe.model.WeatherForecastResult;
-import com.mobiwardrobe.mobiwardrobe.model.WeatherResult;
+import com.mobiwardrobe.mobiwardrobe.model.weather.WeatherForecastResult;
+import com.mobiwardrobe.mobiwardrobe.model.weather.WeatherResult;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

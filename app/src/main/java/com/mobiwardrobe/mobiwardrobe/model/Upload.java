@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe.upload;
+package com.mobiwardrobe.mobiwardrobe.model;
 
 public class Upload {
     public String name;

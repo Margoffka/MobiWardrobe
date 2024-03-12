@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe.model;
+package com.mobiwardrobe.mobiwardrobe.model.weather;
 
 public class Main {
     private double temp;

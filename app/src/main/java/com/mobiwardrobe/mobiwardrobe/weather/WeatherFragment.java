@@ -2,9 +2,7 @@ package com.mobiwardrobe.mobiwardrobe.weather;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,17 +16,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -48,23 +40,19 @@ import com.mobiwardrobe.mobiwardrobe.adapters.WeatherForecastAdapter;
 import com.mobiwardrobe.mobiwardrobe.api.Api;
 import com.mobiwardrobe.mobiwardrobe.interfaces.WeatherCallback;
 import com.mobiwardrobe.mobiwardrobe.interfaces.WeatherForecastCallback;
-import com.mobiwardrobe.mobiwardrobe.model.WeatherForecastResult;
-import com.mobiwardrobe.mobiwardrobe.model.WeatherResult;
-import com.mobiwardrobe.mobiwardrobe.outfit.Outfit;
+import com.mobiwardrobe.mobiwardrobe.model.weather.WeatherForecastResult;
+import com.mobiwardrobe.mobiwardrobe.model.weather.WeatherResult;
+import com.mobiwardrobe.mobiwardrobe.model.Outfit;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class WeatherFragment extends Fragment implements WeatherCallback, WeatherForecastCallback {
-    private FusedLocationProviderClient fusedLocationProviderClient;
-    private LocationCallback locationCallback;
-    private LocationRequest locationRequest;
-
-    private CoordinatorLayout coordinatorLayout;
+     private CoordinatorLayout coordinatorLayout;
     private ImageView weatherImage;
     private TextView cityName, humidity, sunrise, sunset, pressure,
-            temperature, description, dateTime, wind, geoCoords;
+            temperature, description, dateTime, wind, geoCoords, outfitTitle;
     private LinearLayout weatherPanel;
     private ProgressBar pbWeather;
 
@@ -88,15 +76,16 @@ public class WeatherFragment extends Fragment implements WeatherCallback, Weathe
 
         cityName = view.findViewById(R.id.tv_weather_city_name);
         humidity = view.findViewById(R.id.tv_weather_humidity);
-        sunrise = view.findViewById(R.id.tv_weather_sunrise);
-        sunset = view.findViewById(R.id.tv_weather_sunset);
-        pressure = view.findViewById(R.id.tv_weather_pressure);
+//        sunrise = view.findViewById(R.id.tv_weather_sunrise);
+//        sunset = view.findViewById(R.id.tv_weather_sunset);
+//        pressure = view.findViewById(R.id.tv_weather_pressure);
         temperature = view.findViewById(R.id.tv_weather_temperature);
         description = view.findViewById(R.id.tv_description);
         dateTime = view.findViewById(R.id.tv_date_time);
-        wind = view.findViewById(R.id.tv_weather_wind);
-        geoCoords = view.findViewById(R.id.tv_weather_coords);
+//        wind = view.findViewById(R.id.tv_weather_wind);
+//        geoCoords = view.findViewById(R.id.tv_weather_coords);
         weatherImage = view.findViewById(R.id.iv_weather_image);
+        outfitTitle =view.findViewById(R.id.tv_weather_outfit_title);
 
         weatherPanel = view.findViewById(R.id.weather_panel);
         pbWeather = view.findViewById(R.id.pb_weather);
@@ -113,7 +102,7 @@ public class WeatherFragment extends Fragment implements WeatherCallback, Weathe
         outfitRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,
                 false));
 
-        weatherController = new WeatherController();
+        weatherController = new WeatherController(getContext());
 
         setOutfitRecycler(outfitRecycler, imageUrls);
         getFromDb();
@@ -125,15 +114,8 @@ public class WeatherFragment extends Fragment implements WeatherCallback, Weathe
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if (report.areAllPermissionsGranted()) {
-                            buildLocationRequest();
-                            buildLocationCallBack();
-
-                            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                                    && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                                return;
-                            }
-                            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
-                            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+                            weatherController.startLocationUpdates(WeatherFragment.this,
+                                    WeatherFragment.this);
                         }
                     }
 
@@ -143,32 +125,7 @@ public class WeatherFragment extends Fragment implements WeatherCallback, Weathe
                     }
                 }).check();
 
-
         return view;
-    }
-
-
-    private void buildLocationCallBack() {
-        locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                super.onLocationResult(locationResult);
-
-                Api.current_location = locationResult.getLastLocation();
-
-                getWeatherInformation();
-                getForecastWeatherInformation();
-            }
-        };
-    }
-
-
-    private void buildLocationRequest() {
-        locationRequest = new LocationRequest();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(5000);
-        locationRequest.setFastestInterval(3000);
-        locationRequest.setSmallestDisplacement(10.0f);
     }
 
     @Override
@@ -182,46 +139,39 @@ public class WeatherFragment extends Fragment implements WeatherCallback, Weathe
         weatherController.clearDisposables();
     }
 
-    private void getWeatherInformation() {
-        weatherController.getWeatherInformation(Api.current_location, this);
-    }
-
-    private void getForecastWeatherInformation() {
-        weatherController.getForecastWeatherInformation(Api.current_location, this);
-    }
-
     // Implement the WeatherCallback and WeatherForecastCallback methods
     @Override
     public void onWeatherDataReceived(WeatherResult weatherResult) {
-        // Handle received weather data
-        Glide.with(getContext()).load(new StringBuilder("https://openweathermap.org/img/w/")
-                .append(weatherResult.getWeather().get(0).getIcon())
-                .append(".png").toString()).into(weatherImage);
+        if (isAdded()) {
+            // Handle received weather data
+            Glide.with(getContext()).load(new StringBuilder("https://openweathermap.org/img/w/")
+                    .append(weatherResult.getWeather().get(0).getIcon())
+                    .append(".png").toString()).into(weatherImage);
 
-        cityName.setText(weatherResult.getName());
-        description.setText(new StringBuilder("Погода в: ")
-                .append(weatherResult.getName()).toString());
-        temperature.setText(new StringBuilder(String.valueOf(weatherResult.getMain()
-                .getTemp())).append("°C").toString());
-        dateTime.setText(Api.convertUnixToDate(weatherResult.getDt()));
-        pressure.setText(new StringBuilder(String.valueOf(weatherResult.getMain()
-                .getPressure())).append(" hpa").toString());
-        humidity.setText(new StringBuilder(String.valueOf(weatherResult.getMain()
-                .getHumidity())).append(" %").toString());
-        sunrise.setText(Api.convertUnixToHour(weatherResult.getSys().getSunrise()));
-        sunset.setText(Api.convertUnixToHour(weatherResult.getSys().getSunset()));
-        geoCoords.setText(new StringBuilder("[").append(weatherResult.getCoord()
-                .toString()).append("]").toString());
+            cityName.setText(weatherResult.getName());
+            description.setText("Влажность: ");
+            temperature.setText(new StringBuilder(String.valueOf(weatherResult.getMain()
+                    .getTemp())).append("°C").toString());
+            dateTime.setText(Api.convertUnixToDate(weatherResult.getDt()));
+//        pressure.setText(new StringBuilder(String.valueOf(weatherResult.getMain()
+//                .getPressure())).append(" hpa").toString());
+            humidity.setText(new StringBuilder(String.valueOf(weatherResult.getMain()
+                    .getHumidity())).append(" %").toString());
+//        sunrise.setText(Api.convertUnixToHour(weatherResult.getSys().getSunrise()));
+//        sunset.setText(Api.convertUnixToHour(weatherResult.getSys().getSunset()));
+//        geoCoords.setText(new StringBuilder("[").append(weatherResult.getCoord()
+//                .toString()).append("]").toString());
 
-        //Display panel
-        weatherPanel.setVisibility(View.VISIBLE);
-        pbWeather.setVisibility(View.GONE);
+            //Display panel
+            weatherPanel.setVisibility(View.VISIBLE);
+            pbWeather.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onWeatherDataError(Throwable throwable) {
         // Handle weather data error
-        Toast.makeText(getActivity(), "" + throwable.getMessage(), Toast.LENGTH_LONG).show();
+        Toast.makeText(requireContext().getApplicationContext(), "" + throwable.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -265,6 +215,7 @@ public class WeatherFragment extends Fragment implements WeatherCallback, Weathe
                     int randomIndex = new Random().nextInt(outfits.size());
                     Outfit randomOutfit = outfits.get(randomIndex);
 
+                    outfitTitle.setText(randomOutfit.getOutfitName());
                     imageUrls.clear();
                     imageUrls.addAll(randomOutfit.getImageUrls());
                     outfitItemAdapter.notifyDataSetChanged();

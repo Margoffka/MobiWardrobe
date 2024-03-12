@@ -4,17 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_wall"
     tools:context=".profile.ProfileActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="0dp">
+
+        <ImageButton
+            android:id="@+id/bt_show_uploads"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="10dp"
+            android:background="?attr/colorPrimary"
+            android:contentDescription="Revert"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:layout_gravity="start"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Профиль"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <ImageView
         android:id="@+id/profileImg"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="30dp"
-        android:src="@drawable/ic_baseline_face_retouching_natural_24"
+        android:src="@drawable/ic_baseline_face_retouching_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <TextView
         android:id="@+id/tv_title_name"
@@ -47,119 +82,18 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="24dp"
+        android:background="@drawable/white_background"
         android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_email"
-        android:background="@drawable/white_background">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:elevation="5dp"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:id="@+id/postsNumber"
-                    android:layout_width="80dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:text="27"
-                    android:textAlignment="center"
-                    android:textColor="@color/my_purple"
-                    android:textSize="26sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/posts"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Posts"
-                    android:textAlignment="center"
-                    android:textColor="@color/my_purple"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:elevation="5dp"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:id="@+id/followersNo"
-                    android:layout_width="80dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:text="455"
-                    android:textAlignment="center"
-                    android:textColor="@color/my_purple"
-                    android:textSize="26sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/followers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Followers"
-                    android:textAlignment="center"
-                    android:textColor="@color/my_purple"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:elevation="5dp"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:id="@+id/followingNo"
-                    android:layout_width="80dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:text="413"
-                    android:textAlignment="center"
-                    android:textColor="@color/my_purple"
-                    android:textSize="26sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/following"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Following"
-                    android:textAlignment="center"
-                    android:textColor="@color/my_purple"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/tv_title_email">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal"
@@ -170,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Name"
+                android:text="Имя"
                 android:textColor="@color/my_purple"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -192,7 +126,7 @@
             android:layout_height="1dp"
             android:layout_margin="10dp"
             android:alpha="0.5"
-            android:background="@color/my_purple" />
+            android:background="@color/color_new_purple" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -206,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Email"
+                android:text="E-mail"
                 android:textColor="@color/my_purple"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -228,37 +162,8 @@
             android:layout_height="1dp"
             android:layout_margin="10dp"
             android:alpha="0.5"
-            android:background="@color/my_purple" />
+            android:background="@color/color_new_purple" />
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:orientation="horizontal"
-            android:padding="8dp">
-
-            <TextView
-                android:id="@+id/message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Send Message"
-                android:textColor="@color/my_purple"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/bt_send_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="message"
-                android:textAlignment="viewEnd"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -272,20 +177,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Set Alarm"
+                android:text="Уведомления"
                 android:textColor="@color/my_purple"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/bt_set_alarm"
+            <TextView
+                android:id="@+id/tv_watch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="alarm"
-                android:textAlignment="viewEnd"
+                android:paddingRight="10dp"
+                android:text="12:30"
+                android:textAlignment="textEnd"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_set_alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_outline_watch_later_24" />
 
         </LinearLayout>
 
@@ -295,13 +208,16 @@
         android:id="@+id/bt_logout"
         android:layout_width="0dp"
         android:layout_height="60dp"
+        android:drawableRight="@drawable/ic_baseline_logout_24"
         android:gravity="center"
         android:text="Выйти из аккаунта"
-        android:textSize="18sp"
-        app:cornerRadius="20dp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/linearLayout"
         app:layout_constraintStart_toStartOf="@id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        android:paddingEnd="30dp"
+        android:paddingStart="60dp"
+        app:cornerRadius="10dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

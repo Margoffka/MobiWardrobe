@@ -1,4 +1,4 @@
-package com.mobiwardrobe.mobiwardrobe.calendar;
+package com.mobiwardrobe.mobiwardrobe.model;
 
 import org.threeten.bp.LocalDate;
 
@@ -23,16 +23,14 @@ public class Event
     
     private String name;
     private String date;
-    private String time;
 
     public Event() {
     }
 
-    public Event(String name, String date, String time)
+    public Event(String name, String date)
     {
         this.name = name;
         this.date = date;
-        this.time = time;
     }
 
     public String getName()
@@ -53,15 +51,5 @@ public class Event
     public void setDate(String date)
     {
         this.date = date;
-    }
-
-    public String getTime()
-    {
-        return time;
-    }
-
-    public void setTime(String time)
-    {
-        this.time = time;
     }
 }

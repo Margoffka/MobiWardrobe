@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.api.Api;
-import com.mobiwardrobe.mobiwardrobe.model.WeatherForecastResult;
+import com.mobiwardrobe.mobiwardrobe.model.weather.WeatherForecastResult;
 
 public class WeatherForecastAdapter extends RecyclerView.Adapter<WeatherForecastAdapter.ForecastHolder> {
     Context context;

@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.calendar.EventEditActivity;
 import com.mobiwardrobe.mobiwardrobe.interfaces.OutfitClickListener;
-import com.mobiwardrobe.mobiwardrobe.outfit.Outfit;
+import com.mobiwardrobe.mobiwardrobe.model.Outfit;
 
 import java.util.ArrayList;
 

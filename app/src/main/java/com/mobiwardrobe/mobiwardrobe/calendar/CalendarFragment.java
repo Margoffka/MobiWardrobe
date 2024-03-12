@@ -29,7 +29,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.mobiwardrobe.mobiwardrobe.R;
-import com.mobiwardrobe.mobiwardrobe.outfit.Outfit;
+import com.mobiwardrobe.mobiwardrobe.model.Event;
+import com.mobiwardrobe.mobiwardrobe.model.Outfit;
 
 import org.threeten.bp.LocalDate;
 
@@ -108,7 +109,9 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
 
 
     private void setMonthView() {
-        monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
+        String monthYear = monthYearFromDate(CalendarUtils.selectedDate);
+        String capitalizedMonthYear = monthYear.substring(0, 1).toUpperCase() + monthYear.substring(1);
+        monthYearText.setText(capitalizedMonthYear);
         ArrayList<LocalDate> daysInMonth = daysInMonthArray(CalendarUtils.selectedDate);
 
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this);
@@ -146,7 +149,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                outfits.clear();
+//                outfits.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Outfit outfit = dataSnapshot.getValue(Outfit.class);
                     outfit.setOutfitKey(dataSnapshot.getKey());
@@ -164,14 +167,13 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         valueEventListener = reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("DataSnapshot", "DataSnapshot: " + snapshot.toString());
+                Log.d("DataSnapshot", "DataSnapshot: " + snapshot);
                 Event.eventsList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Event event = dataSnapshot.getValue(Event.class);
                     Event.eventsList.add(event);
                 }
                 eventAdapter.notifyDataSetChanged();
-
             }
 
             @Override

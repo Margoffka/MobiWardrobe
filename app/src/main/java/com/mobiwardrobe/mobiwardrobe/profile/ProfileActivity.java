@@ -1,10 +1,14 @@
 package com.mobiwardrobe.mobiwardrobe.profile;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -20,11 +24,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mobiwardrobe.mobiwardrobe.MainActivity;
 import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.authorization.LoginActivity;
-import com.mobiwardrobe.mobiwardrobe.authorization.User;
+import com.mobiwardrobe.mobiwardrobe.model.User;
 import com.mobiwardrobe.mobiwardrobe.notifications.AlarmHelper;
-import com.mobiwardrobe.mobiwardrobe.notifications.NotificationHelper;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -32,11 +36,15 @@ public class ProfileActivity extends AppCompatActivity {
     DatabaseReference reference;
     String userID;
     FirebaseAuth mAuth;
-    Button logoutBtn, sendMessage, setAlarm;
+    Button logoutBtn;
+    ImageView setAlarm;
     private int selectedHour;
     private int selectedMinute;
+    TextView watch;
 
+    ImageButton backButton;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +55,16 @@ public class ProfileActivity extends AppCompatActivity {
         userID = user.getUid();
         mAuth = FirebaseAuth.getInstance();
         logoutBtn = findViewById(R.id.bt_logout);
-        sendMessage = findViewById(R.id.bt_send_message);
-        setAlarm = findViewById(R.id.bt_set_alarm);
+        setAlarm = findViewById(R.id.iv_set_alarm);
+        backButton = findViewById(R.id.bt_show_uploads);
 
         final TextView titleName = findViewById(R.id.tv_title_name);
         final TextView titleEmail = findViewById(R.id.tv_title_email);
         final TextView profileName = findViewById(R.id.tv_profile_name);
         final TextView profileEmail = findViewById(R.id.tv_profile_email);
+        watch = findViewById(R.id.tv_watch);
+
+        watch.setText("");
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -82,19 +93,23 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
         });
 
-        sendMessage.setOnClickListener(view -> {
-            String title = "Запланируйте комплект!";
-            String message = "На улице солнышко, не забудьте взять солнечные очки :)";
-            NotificationHelper.sendNotification(this, title, message);
-        });
-
         setAlarm.setOnClickListener(v -> {
             showTimePickerDialog();
         });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+                finish();
+            }
+        });
     }
+
 
     private void showTimePickerDialog() {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 selectedHour = hourOfDay;
@@ -102,6 +117,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                 // Установка будильника
                 AlarmHelper.setRepeatingAlarm(ProfileActivity.this, selectedHour, selectedMinute);
+                watch.setText(selectedHour + ":" + selectedMinute);
                 Log.d("MESSAGE", selectedHour + " " + selectedMinute);
             }
         }, 0, 0, true);

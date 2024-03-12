@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".outfitupload.CreateOutfitActivity">
+    tools:context=".outfitupload.CreateOutfitActivity"
+    android:background="@drawable/gradient_wall">
+
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_details"
@@ -16,62 +19,175 @@
         android:theme="?attr/actionBarTheme">
 
         <ImageButton
-            android:id="@+id/bt_show_uploads"
+            android:id="@+id/bt_details_back"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="10dp"
-            android:background="@color/my_purple"
+            android:background="?attr/colorPrimary"
             android:contentDescription="Revert"
-            android:src="@drawable/ic_baseline_reply_24"
-            android:layout_gravity="center_vertical|start"/>
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:layout_gravity="start"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="Описание"
             android:textAlignment="center"
-            android:textColor="@color/very_dark_purple"
-            android:textSize="28sp"
-            android:layout_gravity="center"/>
+            android:textColor="@color/white"
+            android:textSize="24sp" />
 
         <ImageButton
-            android:id="@+id/bt_details_delete"
+            android:id="@+id/ib_details_delete"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="#CD0606"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="15dp"
+            android:background="?attr/colorPrimary"
             android:contentDescription="Delete"
-            android:layout_marginEnd="20dp"
-            android:src="@drawable/ic_baseline_delete_24"
-            android:layout_gravity="center_vertical|end"/>
+            android:src="@drawable/ic_baseline_delete_outline_24" />
+
     </androidx.appcompat.widget.Toolbar>
 
-
-    <TextView
-        android:id="@+id/tv_outfit_details_name"
-        android:layout_width="374dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="142dp"
-        android:layout_marginEnd="14dp"
-        android:background="@drawable/purple_border"
-        android:hint="Введите название комплекта"
-        android:padding="16dp"
-        android:textColor="@color/my_purple"
-        android:textSize="18sp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_outfit_details"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_outfit_details_name"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="71dp"
-        android:layout_marginBottom="0dp"
-        android:scrollbars="horizontal" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/toolbar_details"
+        android:gravity="center"
+        >
 
-</RelativeLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="15dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/purple_border"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tv_outfit_details_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Введите название"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_new_purple"
+                    android:textSize="18sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_outfit_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:scrollbars="horizontal" />
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="15dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/purple_background"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Погода:"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_details_outfit_weather"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Погода"
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/white" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Описание"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_details_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="45dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/white_border"
+                        android:text="Описание"
+                        android:textColor="@color/white"
+                        android:padding="10dp"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_background"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

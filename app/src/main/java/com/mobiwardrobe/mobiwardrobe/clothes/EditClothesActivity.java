@@ -34,7 +34,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.mobiwardrobe.mobiwardrobe.MainActivity;
 import com.mobiwardrobe.mobiwardrobe.R;
-import com.mobiwardrobe.mobiwardrobe.upload.Upload;
+import com.mobiwardrobe.mobiwardrobe.model.Upload;
 
 public class EditClothesActivity extends AppCompatActivity {
 

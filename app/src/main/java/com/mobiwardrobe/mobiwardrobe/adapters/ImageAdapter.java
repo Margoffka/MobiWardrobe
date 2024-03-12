@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.interfaces.OnItemClickListener;
-import com.mobiwardrobe.mobiwardrobe.upload.Upload;
+import com.mobiwardrobe.mobiwardrobe.model.Upload;
 
 import java.util.List;
 
@@ -77,8 +77,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             menu.setHeaderTitle("Select Action");
-            MenuItem doWhatever = menu.add(Menu.NONE, 1, 1, "Do whatever");
-            MenuItem delete = menu.add(Menu.NONE, 2, 2, "Delete");
+            MenuItem doWhatever = menu.add(Menu.NONE, 1, 1, "Редактировать");
+            MenuItem delete = menu.add(Menu.NONE, 2, 2, "Удалить");
 
             doWhatever.setOnMenuItemClickListener(this);
             delete.setOnMenuItemClickListener(this);

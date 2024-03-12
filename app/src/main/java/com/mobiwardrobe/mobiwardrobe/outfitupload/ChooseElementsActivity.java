@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.adapters.ElementAdapter;
 import com.mobiwardrobe.mobiwardrobe.interfaces.ChooseElementListener;
-import com.mobiwardrobe.mobiwardrobe.upload.Upload;
+import com.mobiwardrobe.mobiwardrobe.model.Upload;
 
 import java.util.ArrayList;
 

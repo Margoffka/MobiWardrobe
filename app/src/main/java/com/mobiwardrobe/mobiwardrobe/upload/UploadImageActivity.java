@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -34,8 +36,12 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.mobiwardrobe.mobiwardrobe.CustomSpinnerAdapter;
 import com.mobiwardrobe.mobiwardrobe.MainActivity;
 import com.mobiwardrobe.mobiwardrobe.R;
+import com.mobiwardrobe.mobiwardrobe.model.Upload;
+
+import java.util.Arrays;
 
 public class UploadImageActivity extends AppCompatActivity {
 
@@ -44,15 +50,14 @@ public class UploadImageActivity extends AppCompatActivity {
     private EditText imageName;
     private ImageView imageView;
     private ProgressBar progressBar;
-    private EditText type;
-    private EditText color;
-    private EditText season;
-    private EditText weather;
+    private Spinner type;
+    private Spinner color;
+    private Spinner season;
+    private Spinner weather;
     ImageButton buttonChooseImage;
-    ImageButton buttonChoosePhoto;
     Button buttonUpload;
     ImageButton buttonShowUploads;
-    
+
     private Uri imageUri;
 
     private StorageReference storageReference;
@@ -71,7 +76,6 @@ public class UploadImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload_image);
 
         buttonChooseImage = findViewById(R.id.bt_choose_image);
-        buttonChoosePhoto = findViewById(R.id.bt_choose_photo);
         buttonUpload = findViewById(R.id.bt_upload);
         buttonShowUploads = findViewById(R.id.bt_show_uploads);
         imageName = findViewById(R.id.et_image_name);
@@ -83,21 +87,43 @@ public class UploadImageActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference("users").child(userID).child("clothes");
         databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userID).child("clothes");
 
-        type = findViewById(R.id.et_type);
-        color = findViewById(R.id.et_color);
-        season = findViewById(R.id.et_season);
-        weather = findViewById(R.id.et_weather);
+        type = findViewById(R.id.sp_type);
+        color = findViewById(R.id.sp_color);
+        season = findViewById(R.id.sp_season);
+        weather = findViewById(R.id.sp_weather);
 
-//        buttonChoosePhoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Intent open_camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-////                startActivityForResult(open_camera, CAMERA_REQUEST_CODE);
-//                CropImage.activity().start(UploadImageActivity.this);
-//            }
-//        });
 
-        buttonChooseImage.setOnClickListener(new View.OnClickListener() {
+        int textColor = getResources().getColor(R.color.my_purple); // Замените на ваш желаемый цвет
+        CustomSpinnerAdapter weatherAdapter = new CustomSpinnerAdapter(this,
+                android.R.layout.simple_spinner_item,
+                Arrays.asList(getResources().getStringArray(R.array.weather_options)),
+                textColor);
+        weatherAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        weather.setAdapter(weatherAdapter);
+
+        CustomSpinnerAdapter typeAdapter = new CustomSpinnerAdapter(this,
+                android.R.layout.simple_spinner_item,
+                Arrays.asList(getResources().getStringArray(R.array.clothes_types)),
+                textColor);
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        type.setAdapter(typeAdapter);
+
+
+        CustomSpinnerAdapter colorAdapter = new CustomSpinnerAdapter(this,
+                android.R.layout.simple_spinner_item,
+                Arrays.asList(getResources().getStringArray(R.array.clothes_colors)),
+                textColor);
+        colorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        color.setAdapter(colorAdapter);
+
+        CustomSpinnerAdapter seasonAdapter = new CustomSpinnerAdapter(this,
+                android.R.layout.simple_spinner_item,
+                Arrays.asList(getResources().getStringArray(R.array.clothes_seasons)),
+                textColor);
+        seasonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        season.setAdapter(seasonAdapter);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openImageChooser();
@@ -126,10 +152,16 @@ public class UploadImageActivity extends AppCompatActivity {
     }
 
     private void openImageChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_PICK);
-        activityResultLauncher.launch(intent);
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK);
+        galleryIntent.setType("image/*");
+
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+
+        Intent chooserIntent = Intent.createChooser(galleryIntent, "Добавьте изображение");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{cameraIntent});
+
+        activityResultLauncher.launch(chooserIntent);
     }
 
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
@@ -139,30 +171,16 @@ public class UploadImageActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
-                        imageUri = data.getData();
-                        imageView.setImageURI(imageUri);
-                    } else {
-                        Toast.makeText(UploadImageActivity.this, "No Image Selected", Toast.LENGTH_SHORT).show();
+                        if (data != null) {
+                            imageUri = data.getData();
+                            imageView.setImageURI(imageUri);
+                        } else {
+                            Toast.makeText(UploadImageActivity.this, "No Image Selected", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }
     );
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-//
-//            if (resultCode == RESULT_OK) {
-//                imageUri = result.getUri();
-//                imageView.setImageURI(imageUri);
-//            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-//                Exception error = result.getError();
-//                Toast.makeText(this, "Possible error: " + error, Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
 
     private String getFileExtension(Uri uri) {
         ContentResolver cR = getContentResolver();
@@ -173,10 +191,10 @@ public class UploadImageActivity extends AppCompatActivity {
     private void uploadImageToFirebase() {
         if (imageUri != null) {
             String imageNameTxt = imageName.getText().toString();
-            String typeTxt = type.getText().toString().trim();
-            String colorTxt =  color.getText().toString().trim();
-            String seasonTxt = season.getText().toString().trim();
-            String weatherTxt = weather.getText().toString().trim();
+            String typeTxt = type.getSelectedItem().toString().trim();
+            String colorTxt =  color.getSelectedItem().toString().trim();
+            String seasonTxt = season.getSelectedItem().toString().trim();
+            String weatherTxt = weather.getSelectedItem().toString().trim();
 
 
             final StorageReference imageReference = storageReference.child(System.currentTimeMillis()

@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.mobiwardrobe.mobiwardrobe.R;
 import com.mobiwardrobe.mobiwardrobe.interfaces.ChooseElementListener;
-import com.mobiwardrobe.mobiwardrobe.upload.Upload;
+import com.mobiwardrobe.mobiwardrobe.model.Upload;
 
 import java.util.ArrayList;
 
@@ -41,7 +41,7 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ElementV
     @Override
     public void onBindViewHolder(@NonNull ElementViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Glide.with(context).load(uploads.get(position).getImageUrl()).into(holder.elementImage);
-        holder.elementName.setText(uploads.get(position).getName());
+//        holder.elementName.setText(uploads.get(position).getName());
         if (uploads != null && uploads.size() > 0){
             holder.checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -71,7 +71,7 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ElementV
         public ElementViewHolder(@NonNull View itemView) {
             super(itemView);
             elementImage = itemView.findViewById(R.id.iv_element_item);
-            elementName = itemView.findViewById(R.id.tv_element_name);
+//            elementName = itemView.findViewById(R.id.tv_element_name);
             cardView = itemView.findViewById(R.id.cv_choose_element);
             checkBox = itemView.findViewById(R.id.checkbox_element);
         }
